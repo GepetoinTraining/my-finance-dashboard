@@ -1,7 +1,19 @@
 {
   "builds": [
     {
-      "src": "src/api/**/*.py",
+      "src": "src/api/get_logs.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "src/api/ingest.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "src/api/ingest_internal.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "src/api/reports/monthly_dre.py",
       "use": "@vercel/python"
     },
     {
@@ -11,8 +23,20 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "src/api/$1"
+      "src": "/api/reports/monthly_dre",
+      "dest": "src/api/reports/monthly_dre.py"
+    },
+    {
+      "src": "/api/ingest_internal",
+      "dest": "src/api/ingest_internal.py"
+    },
+    {
+      "src": "/api/ingest",
+      "dest": "src/api/ingest.py"
+    },
+    {
+      "src": "/api/get_logs",
+      "dest": "src/api/get_logs.py"
     },
     {
       "src": "/(.*)",
