@@ -88,7 +88,7 @@ log: logging.Logger = logging.getLogger(__name__)
 SCHEMA_PATH = Path('C:/Users/CLIENTE/Desktop/Extratos/my-finance-dashboard/prisma/schema.prisma')
 PACKAGED_SCHEMA_PATH = Path(__file__).parent.joinpath('schema.prisma')
 ENGINE_TYPE: EngineType = EngineType.binary
-BINARY_PATHS = model_parse(BinaryPaths, {'queryEngine': {'windows': 'C:\\Users\\CLIENTE\\AppData\\Local\\npm-cache\\_npx\\55ad0b431757dc30\\node_modules\\prisma\\query-engine-windows.exe'}, 'introspectionEngine': {}, 'migrationEngine': {}, 'libqueryEngine': {}, 'prismaFmt': {}})
+BINARY_PATHS = model_parse(BinaryPaths, {'queryEngine': {'windows': 'C:\\Users\\CLIENTE\\Desktop\\Extratos\\my-finance-dashboard\\node_modules\\prisma\\query-engine-windows.exe', 'linux-musl-openssl-3.0.x': 'C:\\Users\\CLIENTE\\Desktop\\Extratos\\my-finance-dashboard\\node_modules\\prisma\\query-engine-linux-musl-openssl-3.0.x'}, 'introspectionEngine': {}, 'migrationEngine': {}, 'libqueryEngine': {}, 'prismaFmt': {}})
 
 
 class Prisma(AsyncBasePrisma):

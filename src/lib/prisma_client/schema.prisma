@@ -6,6 +6,9 @@ generator client {
   output                      = "../src/lib/prisma_client"
   recursive_type_depth        = -1
   enable_experimental_decimal = true
+  // ADD THIS LINE: This tells Prisma to download the Vercel-compatible binary
+  // and include its path in the generated client.py file.
+  binaryTargets               = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
