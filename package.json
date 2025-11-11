@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
   "dev": "next dev",
-  "build": "pip install -r requirements.txt && export PRISMA_CLI_PATH=\"$(npm bin)/prisma\" && python3 -m prisma generate && next build",
+  "build": "pip install -r requirements.txt && next build",
   "start": "next start",
   "lint": "eslint"
 },
