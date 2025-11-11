@@ -952,6 +952,46 @@ class FindManyBankTransactionsArgsFromIngestionLogs(TypedDict, total=False):
     include: 'BankTransactionsIncludeFromBankTransactions'
 
 
+class InternalPaymentsIncludeFromIngestionLogs(TypedDict, total=False):
+    """Relational arguments for IngestionLogs"""
+
+
+class InternalPaymentsArgsFromIngestionLogs(TypedDict, total=False):
+    """Arguments for IngestionLogs"""
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class FindManyInternalPaymentsArgsFromIngestionLogs(TypedDict, total=False):
+    """Arguments for IngestionLogs"""
+    take: int
+    skip: int
+    order_by: Union['InternalPaymentsOrderByInput', List['InternalPaymentsOrderByInput']]
+    where: 'InternalPaymentsWhereInput'
+    cursor: 'InternalPaymentsWhereUniqueInput'
+    distinct: List['InternalPaymentsScalarFieldKeys']
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class InternalReceivablesIncludeFromIngestionLogs(TypedDict, total=False):
+    """Relational arguments for IngestionLogs"""
+
+
+class InternalReceivablesArgsFromIngestionLogs(TypedDict, total=False):
+    """Arguments for IngestionLogs"""
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
+class FindManyInternalReceivablesArgsFromIngestionLogs(TypedDict, total=False):
+    """Arguments for IngestionLogs"""
+    take: int
+    skip: int
+    order_by: Union['InternalReceivablesOrderByInput', List['InternalReceivablesOrderByInput']]
+    where: 'InternalReceivablesWhereInput'
+    cursor: 'InternalReceivablesWhereUniqueInput'
+    distinct: List['InternalReceivablesScalarFieldKeys']
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
 
 
 FindManyIngestionLogsArgs = FindManyIngestionLogsArgsFromIngestionLogs
@@ -1417,6 +1457,46 @@ class FindManyBankTransactionsArgsFromBankTransactions(TypedDict, total=False):
     include: 'BankTransactionsIncludeFromBankTransactions'
 
 
+class InternalPaymentsIncludeFromBankTransactions(TypedDict, total=False):
+    """Relational arguments for BankTransactions"""
+
+
+class InternalPaymentsArgsFromBankTransactions(TypedDict, total=False):
+    """Arguments for BankTransactions"""
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class FindManyInternalPaymentsArgsFromBankTransactions(TypedDict, total=False):
+    """Arguments for BankTransactions"""
+    take: int
+    skip: int
+    order_by: Union['InternalPaymentsOrderByInput', List['InternalPaymentsOrderByInput']]
+    where: 'InternalPaymentsWhereInput'
+    cursor: 'InternalPaymentsWhereUniqueInput'
+    distinct: List['InternalPaymentsScalarFieldKeys']
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class InternalReceivablesIncludeFromBankTransactions(TypedDict, total=False):
+    """Relational arguments for BankTransactions"""
+
+
+class InternalReceivablesArgsFromBankTransactions(TypedDict, total=False):
+    """Arguments for BankTransactions"""
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
+class FindManyInternalReceivablesArgsFromBankTransactions(TypedDict, total=False):
+    """Arguments for BankTransactions"""
+    take: int
+    skip: int
+    order_by: Union['InternalReceivablesOrderByInput', List['InternalReceivablesOrderByInput']]
+    where: 'InternalReceivablesWhereInput'
+    cursor: 'InternalReceivablesWhereUniqueInput'
+    distinct: List['InternalReceivablesScalarFieldKeys']
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
 
 
 FindManyBankTransactionsArgs = FindManyBankTransactionsArgsFromBankTransactions
@@ -1623,6 +1703,1389 @@ BankTransactionsScalarFieldKeys = Literal[
 BankTransactionsScalarFieldKeysT = TypeVar('BankTransactionsScalarFieldKeysT', bound=BankTransactionsScalarFieldKeys)
 
 BankTransactionsRelationalFieldKeys = _NoneType
+
+# InternalPayments types
+
+class InternalPaymentsOptionalCreateInput(TypedDict, total=False):
+    """Optional arguments to the InternalPayments create method"""
+    id: _int
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    created_at: datetime.datetime
+
+
+class InternalPaymentsCreateInput(InternalPaymentsOptionalCreateInput):
+    """Required arguments to the InternalPayments create method"""
+    source_file_name: _str
+
+
+# TODO: remove this in favour of without explicit relations
+# e.g. PostCreateWithoutAuthorInput
+
+class InternalPaymentsOptionalCreateWithoutRelationsInput(TypedDict, total=False):
+    """Optional arguments to the InternalPayments create method, without relations"""
+    id: _int
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    created_at: datetime.datetime
+
+
+class InternalPaymentsCreateWithoutRelationsInput(InternalPaymentsOptionalCreateWithoutRelationsInput):
+    """Required arguments to the InternalPayments create method, without relations"""
+    source_file_name: _str
+
+class InternalPaymentsConnectOrCreateWithoutRelationsInput(TypedDict):
+    create: 'InternalPaymentsCreateWithoutRelationsInput'
+    where: 'InternalPaymentsWhereUniqueInput'
+
+class InternalPaymentsCreateNestedWithoutRelationsInput(TypedDict, total=False):
+    create: 'InternalPaymentsCreateWithoutRelationsInput'
+    connect: 'InternalPaymentsWhereUniqueInput'
+    connect_or_create: 'InternalPaymentsConnectOrCreateWithoutRelationsInput'
+
+
+class InternalPaymentsCreateManyNestedWithoutRelationsInput(TypedDict, total=False):
+    create: Union['InternalPaymentsCreateWithoutRelationsInput', List['InternalPaymentsCreateWithoutRelationsInput']]
+    connect: Union['InternalPaymentsWhereUniqueInput', List['InternalPaymentsWhereUniqueInput']]
+    connect_or_create: Union['InternalPaymentsConnectOrCreateWithoutRelationsInput', List['InternalPaymentsConnectOrCreateWithoutRelationsInput']]
+
+_InternalPaymentsWhereUnique_id_Input = TypedDict(
+    '_InternalPaymentsWhereUnique_id_Input',
+    {
+        'id': '_int',
+    },
+    total=True
+)
+
+InternalPaymentsWhereUniqueInput = _InternalPaymentsWhereUnique_id_Input
+
+
+class InternalPaymentsUpdateInput(TypedDict, total=False):
+    """Optional arguments for updating a record"""
+    id: Union[AtomicIntInput, _int]
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+class InternalPaymentsUpdateManyMutationInput(TypedDict, total=False):
+    """Arguments for updating many records"""
+    id: Union[AtomicIntInput, _int]
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+class InternalPaymentsUpdateManyWithoutRelationsInput(TypedDict, total=False):
+    create: List['InternalPaymentsCreateWithoutRelationsInput']
+    connect: List['InternalPaymentsWhereUniqueInput']
+    connect_or_create: List['InternalPaymentsConnectOrCreateWithoutRelationsInput']
+    set: List['InternalPaymentsWhereUniqueInput']
+    disconnect: List['InternalPaymentsWhereUniqueInput']
+    delete: List['InternalPaymentsWhereUniqueInput']
+
+    # TODO
+    # update: List['InternalPaymentsUpdateWithWhereUniqueWithoutRelationsInput']
+    # updateMany: List['InternalPaymentsUpdateManyWithWhereUniqueWithoutRelationsInput']
+    # deleteMany: List['InternalPaymentsScalarWhereInput']
+    # upsert: List['InternalPaymentsUpserteWithWhereUniqueWithoutRelationsInput']
+
+
+class InternalPaymentsUpdateOneWithoutRelationsInput(TypedDict, total=False):
+    create: 'InternalPaymentsCreateWithoutRelationsInput'
+    connect: 'InternalPaymentsWhereUniqueInput'
+    connect_or_create: 'InternalPaymentsConnectOrCreateWithoutRelationsInput'
+    disconnect: bool
+    delete: bool
+
+    # TODO
+    # update: 'InternalPaymentsUpdateInput'
+    # upsert: 'InternalPaymentsUpsertWithoutRelationsInput'
+
+
+class InternalPaymentsUpsertInput(TypedDict):
+    create: 'InternalPaymentsCreateInput'
+    update: 'InternalPaymentsUpdateInput'  # pyright: ignore[reportIncompatibleMethodOverride]
+
+
+_InternalPayments_id_OrderByInput = TypedDict(
+    '_InternalPayments_id_OrderByInput',
+    {
+        'id': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_category_OrderByInput = TypedDict(
+    '_InternalPayments_category_OrderByInput',
+    {
+        'category': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_entity_name_OrderByInput = TypedDict(
+    '_InternalPayments_entity_name_OrderByInput',
+    {
+        'entity_name': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_entity_type_OrderByInput = TypedDict(
+    '_InternalPayments_entity_type_OrderByInput',
+    {
+        'entity_type': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_installment_OrderByInput = TypedDict(
+    '_InternalPayments_installment_OrderByInput',
+    {
+        'installment': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_issue_date_OrderByInput = TypedDict(
+    '_InternalPayments_issue_date_OrderByInput',
+    {
+        'issue_date': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_due_date_OrderByInput = TypedDict(
+    '_InternalPayments_due_date_OrderByInput',
+    {
+        'due_date': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_full_amount_OrderByInput = TypedDict(
+    '_InternalPayments_full_amount_OrderByInput',
+    {
+        'full_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_discount_amount_OrderByInput = TypedDict(
+    '_InternalPayments_discount_amount_OrderByInput',
+    {
+        'discount_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_updated_amount_OrderByInput = TypedDict(
+    '_InternalPayments_updated_amount_OrderByInput',
+    {
+        'updated_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_paid_amount_OrderByInput = TypedDict(
+    '_InternalPayments_paid_amount_OrderByInput',
+    {
+        'paid_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_notes_OrderByInput = TypedDict(
+    '_InternalPayments_notes_OrderByInput',
+    {
+        'notes': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_status_OrderByInput = TypedDict(
+    '_InternalPayments_status_OrderByInput',
+    {
+        'status': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_source_file_name_OrderByInput = TypedDict(
+    '_InternalPayments_source_file_name_OrderByInput',
+    {
+        'source_file_name': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_created_at_OrderByInput = TypedDict(
+    '_InternalPayments_created_at_OrderByInput',
+    {
+        'created_at': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_RelevanceInner = TypedDict(
+    '_InternalPayments_RelevanceInner',
+    {
+        'fields': 'List[InternalPaymentsScalarFieldKeys]',
+        'search': 'str',
+        'sort': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalPayments_RelevanceOrderByInput = TypedDict(
+    '_InternalPayments_RelevanceOrderByInput',
+    {
+        '_relevance': '_InternalPayments_RelevanceInner',
+    },
+    total=True
+)
+
+InternalPaymentsOrderByInput = Union[
+    '_InternalPayments_id_OrderByInput',
+    '_InternalPayments_category_OrderByInput',
+    '_InternalPayments_entity_name_OrderByInput',
+    '_InternalPayments_entity_type_OrderByInput',
+    '_InternalPayments_installment_OrderByInput',
+    '_InternalPayments_issue_date_OrderByInput',
+    '_InternalPayments_due_date_OrderByInput',
+    '_InternalPayments_full_amount_OrderByInput',
+    '_InternalPayments_discount_amount_OrderByInput',
+    '_InternalPayments_updated_amount_OrderByInput',
+    '_InternalPayments_paid_amount_OrderByInput',
+    '_InternalPayments_notes_OrderByInput',
+    '_InternalPayments_status_OrderByInput',
+    '_InternalPayments_source_file_name_OrderByInput',
+    '_InternalPayments_created_at_OrderByInput',
+    '_InternalPayments_RelevanceOrderByInput',
+]
+
+
+
+# recursive InternalPayments types
+# TODO: cleanup these types
+
+
+
+InternalPaymentsRelationFilter = TypedDict(
+    'InternalPaymentsRelationFilter',
+    {
+        'is': 'InternalPaymentsWhereInput',
+        'is_not': 'InternalPaymentsWhereInput',
+    },
+    total=False,
+)
+
+
+class InternalPaymentsListRelationFilter(TypedDict, total=False):
+    some: 'InternalPaymentsWhereInput'
+    none: 'InternalPaymentsWhereInput'
+    every: 'InternalPaymentsWhereInput'
+
+
+class InternalPaymentsInclude(TypedDict, total=False):
+    """InternalPayments relational arguments"""
+
+
+class IngestionLogsIncludeFromInternalPayments(TypedDict, total=False):
+    """Relational arguments for InternalPayments"""
+
+
+class IngestionLogsArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    include: 'IngestionLogsIncludeFromIngestionLogs'
+
+
+class FindManyIngestionLogsArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    take: int
+    skip: int
+    order_by: Union['IngestionLogsOrderByInput', List['IngestionLogsOrderByInput']]
+    where: 'IngestionLogsWhereInput'
+    cursor: 'IngestionLogsWhereUniqueInput'
+    distinct: List['IngestionLogsScalarFieldKeys']
+    include: 'IngestionLogsIncludeFromIngestionLogs'
+
+
+class BankTransactionsIncludeFromInternalPayments(TypedDict, total=False):
+    """Relational arguments for InternalPayments"""
+
+
+class BankTransactionsArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    include: 'BankTransactionsIncludeFromBankTransactions'
+
+
+class FindManyBankTransactionsArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    take: int
+    skip: int
+    order_by: Union['BankTransactionsOrderByInput', List['BankTransactionsOrderByInput']]
+    where: 'BankTransactionsWhereInput'
+    cursor: 'BankTransactionsWhereUniqueInput'
+    distinct: List['BankTransactionsScalarFieldKeys']
+    include: 'BankTransactionsIncludeFromBankTransactions'
+
+
+class InternalPaymentsIncludeFromInternalPayments(TypedDict, total=False):
+    """Relational arguments for InternalPayments"""
+
+
+class InternalPaymentsArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class FindManyInternalPaymentsArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    take: int
+    skip: int
+    order_by: Union['InternalPaymentsOrderByInput', List['InternalPaymentsOrderByInput']]
+    where: 'InternalPaymentsWhereInput'
+    cursor: 'InternalPaymentsWhereUniqueInput'
+    distinct: List['InternalPaymentsScalarFieldKeys']
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class InternalReceivablesIncludeFromInternalPayments(TypedDict, total=False):
+    """Relational arguments for InternalPayments"""
+
+
+class InternalReceivablesArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
+class FindManyInternalReceivablesArgsFromInternalPayments(TypedDict, total=False):
+    """Arguments for InternalPayments"""
+    take: int
+    skip: int
+    order_by: Union['InternalReceivablesOrderByInput', List['InternalReceivablesOrderByInput']]
+    where: 'InternalReceivablesWhereInput'
+    cursor: 'InternalReceivablesWhereUniqueInput'
+    distinct: List['InternalReceivablesScalarFieldKeys']
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
+
+
+FindManyInternalPaymentsArgs = FindManyInternalPaymentsArgsFromInternalPayments
+FindFirstInternalPaymentsArgs = FindManyInternalPaymentsArgsFromInternalPayments
+
+
+class InternalPaymentsWhereInput(TypedDict, total=False):
+    """InternalPayments arguments for searching"""
+    id: Union[_int, 'types.IntFilter']
+    category: Union[None, _str, 'types.StringFilter']
+    entity_name: Union[None, _str, 'types.StringFilter']
+    entity_type: Union[None, _str, 'types.StringFilter']
+    installment: Union[None, _str, 'types.StringFilter']
+    issue_date: Union[None, datetime.datetime, 'types.DateTimeFilter']
+    due_date: Union[None, datetime.datetime, 'types.DateTimeFilter']
+    full_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    discount_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    updated_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    paid_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    notes: Union[None, _str, 'types.StringFilter']
+    status: Union[None, _str, 'types.StringFilter']
+    source_file_name: Union[_str, 'types.StringFilter']
+    created_at: Union[datetime.datetime, 'types.DateTimeFilter']
+
+    # should be noted that AND and NOT should be Union['InternalPaymentsWhereInput', List['InternalPaymentsWhereInput']]
+    # but this causes mypy to hang :/
+    AND: List['InternalPaymentsWhereInput']
+    OR: List['InternalPaymentsWhereInput']
+    NOT: List['InternalPaymentsWhereInput']
+
+
+
+# aggregate InternalPayments types
+
+
+class InternalPaymentsScalarWhereWithAggregatesInput(TypedDict, total=False):
+    """InternalPayments arguments for searching"""
+    id: Union[_int, 'types.IntWithAggregatesFilter']
+    category: Union[_str, 'types.StringWithAggregatesFilter']
+    entity_name: Union[_str, 'types.StringWithAggregatesFilter']
+    entity_type: Union[_str, 'types.StringWithAggregatesFilter']
+    installment: Union[_str, 'types.StringWithAggregatesFilter']
+    issue_date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    due_date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    full_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    discount_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    updated_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    paid_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    notes: Union[_str, 'types.StringWithAggregatesFilter']
+    status: Union[_str, 'types.StringWithAggregatesFilter']
+    source_file_name: Union[_str, 'types.StringWithAggregatesFilter']
+    created_at: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+    AND: List['InternalPaymentsScalarWhereWithAggregatesInput']
+    OR: List['InternalPaymentsScalarWhereWithAggregatesInput']
+    NOT: List['InternalPaymentsScalarWhereWithAggregatesInput']
+
+
+
+class InternalPaymentsGroupByOutput(TypedDict, total=False):
+    id: _int
+    category: _str
+    entity_name: _str
+    entity_type: _str
+    installment: _str
+    issue_date: datetime.datetime
+    due_date: datetime.datetime
+    full_amount: decimal.Decimal
+    discount_amount: decimal.Decimal
+    updated_amount: decimal.Decimal
+    paid_amount: decimal.Decimal
+    notes: _str
+    status: _str
+    source_file_name: _str
+    created_at: datetime.datetime
+    _sum: 'InternalPaymentsSumAggregateOutput'
+    _avg: 'InternalPaymentsAvgAggregateOutput'
+    _min: 'InternalPaymentsMinAggregateOutput'
+    _max: 'InternalPaymentsMaxAggregateOutput'
+    _count: 'InternalPaymentsCountAggregateOutput'
+
+
+class InternalPaymentsAvgAggregateOutput(TypedDict, total=False):
+    """InternalPayments output for aggregating averages"""
+    id: float
+
+
+class InternalPaymentsSumAggregateOutput(TypedDict, total=False):
+    """InternalPayments output for aggregating sums"""
+    id: _int
+
+
+class InternalPaymentsScalarAggregateOutput(TypedDict, total=False):
+    """InternalPayments output including scalar fields"""
+    id: _int
+    category: _str
+    entity_name: _str
+    entity_type: _str
+    installment: _str
+    issue_date: datetime.datetime
+    due_date: datetime.datetime
+    full_amount: decimal.Decimal
+    discount_amount: decimal.Decimal
+    updated_amount: decimal.Decimal
+    paid_amount: decimal.Decimal
+    notes: _str
+    status: _str
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+InternalPaymentsMinAggregateOutput = InternalPaymentsScalarAggregateOutput
+InternalPaymentsMaxAggregateOutput = InternalPaymentsScalarAggregateOutput
+
+
+class InternalPaymentsMaxAggregateInput(TypedDict, total=False):
+    """InternalPayments input for aggregating by max"""
+    id: bool
+    category: bool
+    entity_name: bool
+    entity_type: bool
+    installment: bool
+    issue_date: bool
+    due_date: bool
+    full_amount: bool
+    discount_amount: bool
+    updated_amount: bool
+    paid_amount: bool
+    notes: bool
+    status: bool
+    source_file_name: bool
+    created_at: bool
+
+
+class InternalPaymentsMinAggregateInput(TypedDict, total=False):
+    """InternalPayments input for aggregating by min"""
+    id: bool
+    category: bool
+    entity_name: bool
+    entity_type: bool
+    installment: bool
+    issue_date: bool
+    due_date: bool
+    full_amount: bool
+    discount_amount: bool
+    updated_amount: bool
+    paid_amount: bool
+    notes: bool
+    status: bool
+    source_file_name: bool
+    created_at: bool
+
+
+class InternalPaymentsNumberAggregateInput(TypedDict, total=False):
+    """InternalPayments input for aggregating numbers"""
+    id: bool
+
+
+InternalPaymentsAvgAggregateInput = InternalPaymentsNumberAggregateInput
+InternalPaymentsSumAggregateInput = InternalPaymentsNumberAggregateInput
+
+
+InternalPaymentsCountAggregateInput = TypedDict(
+    'InternalPaymentsCountAggregateInput',
+    {
+        'id': bool,
+        'category': bool,
+        'entity_name': bool,
+        'entity_type': bool,
+        'installment': bool,
+        'issue_date': bool,
+        'due_date': bool,
+        'full_amount': bool,
+        'discount_amount': bool,
+        'updated_amount': bool,
+        'paid_amount': bool,
+        'notes': bool,
+        'status': bool,
+        'source_file_name': bool,
+        'created_at': bool,
+        '_all': bool,
+    },
+    total=False,
+)
+
+InternalPaymentsCountAggregateOutput = TypedDict(
+    'InternalPaymentsCountAggregateOutput',
+    {
+        'id': int,
+        'category': int,
+        'entity_name': int,
+        'entity_type': int,
+        'installment': int,
+        'issue_date': int,
+        'due_date': int,
+        'full_amount': int,
+        'discount_amount': int,
+        'updated_amount': int,
+        'paid_amount': int,
+        'notes': int,
+        'status': int,
+        'source_file_name': int,
+        'created_at': int,
+        '_all': int,
+    },
+    total=False,
+)
+
+
+InternalPaymentsKeys = Literal[
+    'id',
+    'category',
+    'entity_name',
+    'entity_type',
+    'installment',
+    'issue_date',
+    'due_date',
+    'full_amount',
+    'discount_amount',
+    'updated_amount',
+    'paid_amount',
+    'notes',
+    'status',
+    'source_file_name',
+    'created_at',
+]
+InternalPaymentsScalarFieldKeys = Literal[
+    'id',
+    'category',
+    'entity_name',
+    'entity_type',
+    'installment',
+    'issue_date',
+    'due_date',
+    'full_amount',
+    'discount_amount',
+    'updated_amount',
+    'paid_amount',
+    'notes',
+    'status',
+    'source_file_name',
+    'created_at',
+]
+InternalPaymentsScalarFieldKeysT = TypeVar('InternalPaymentsScalarFieldKeysT', bound=InternalPaymentsScalarFieldKeys)
+
+InternalPaymentsRelationalFieldKeys = _NoneType
+
+# InternalReceivables types
+
+class InternalReceivablesOptionalCreateInput(TypedDict, total=False):
+    """Optional arguments to the InternalReceivables create method"""
+    id: _int
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    phone: Optional[_str]
+    financial_responsible: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    contract_status: Optional[_str]
+    created_at: datetime.datetime
+
+
+class InternalReceivablesCreateInput(InternalReceivablesOptionalCreateInput):
+    """Required arguments to the InternalReceivables create method"""
+    source_file_name: _str
+
+
+# TODO: remove this in favour of without explicit relations
+# e.g. PostCreateWithoutAuthorInput
+
+class InternalReceivablesOptionalCreateWithoutRelationsInput(TypedDict, total=False):
+    """Optional arguments to the InternalReceivables create method, without relations"""
+    id: _int
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    phone: Optional[_str]
+    financial_responsible: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    contract_status: Optional[_str]
+    created_at: datetime.datetime
+
+
+class InternalReceivablesCreateWithoutRelationsInput(InternalReceivablesOptionalCreateWithoutRelationsInput):
+    """Required arguments to the InternalReceivables create method, without relations"""
+    source_file_name: _str
+
+class InternalReceivablesConnectOrCreateWithoutRelationsInput(TypedDict):
+    create: 'InternalReceivablesCreateWithoutRelationsInput'
+    where: 'InternalReceivablesWhereUniqueInput'
+
+class InternalReceivablesCreateNestedWithoutRelationsInput(TypedDict, total=False):
+    create: 'InternalReceivablesCreateWithoutRelationsInput'
+    connect: 'InternalReceivablesWhereUniqueInput'
+    connect_or_create: 'InternalReceivablesConnectOrCreateWithoutRelationsInput'
+
+
+class InternalReceivablesCreateManyNestedWithoutRelationsInput(TypedDict, total=False):
+    create: Union['InternalReceivablesCreateWithoutRelationsInput', List['InternalReceivablesCreateWithoutRelationsInput']]
+    connect: Union['InternalReceivablesWhereUniqueInput', List['InternalReceivablesWhereUniqueInput']]
+    connect_or_create: Union['InternalReceivablesConnectOrCreateWithoutRelationsInput', List['InternalReceivablesConnectOrCreateWithoutRelationsInput']]
+
+_InternalReceivablesWhereUnique_id_Input = TypedDict(
+    '_InternalReceivablesWhereUnique_id_Input',
+    {
+        'id': '_int',
+    },
+    total=True
+)
+
+InternalReceivablesWhereUniqueInput = _InternalReceivablesWhereUnique_id_Input
+
+
+class InternalReceivablesUpdateInput(TypedDict, total=False):
+    """Optional arguments for updating a record"""
+    id: Union[AtomicIntInput, _int]
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    phone: Optional[_str]
+    financial_responsible: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    contract_status: Optional[_str]
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+class InternalReceivablesUpdateManyMutationInput(TypedDict, total=False):
+    """Arguments for updating many records"""
+    id: Union[AtomicIntInput, _int]
+    category: Optional[_str]
+    entity_name: Optional[_str]
+    entity_type: Optional[_str]
+    phone: Optional[_str]
+    financial_responsible: Optional[_str]
+    installment: Optional[_str]
+    issue_date: Optional[datetime.datetime]
+    due_date: Optional[datetime.datetime]
+    full_amount: Optional[decimal.Decimal]
+    discount_amount: Optional[decimal.Decimal]
+    updated_amount: Optional[decimal.Decimal]
+    paid_amount: Optional[decimal.Decimal]
+    notes: Optional[_str]
+    status: Optional[_str]
+    contract_status: Optional[_str]
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+class InternalReceivablesUpdateManyWithoutRelationsInput(TypedDict, total=False):
+    create: List['InternalReceivablesCreateWithoutRelationsInput']
+    connect: List['InternalReceivablesWhereUniqueInput']
+    connect_or_create: List['InternalReceivablesConnectOrCreateWithoutRelationsInput']
+    set: List['InternalReceivablesWhereUniqueInput']
+    disconnect: List['InternalReceivablesWhereUniqueInput']
+    delete: List['InternalReceivablesWhereUniqueInput']
+
+    # TODO
+    # update: List['InternalReceivablesUpdateWithWhereUniqueWithoutRelationsInput']
+    # updateMany: List['InternalReceivablesUpdateManyWithWhereUniqueWithoutRelationsInput']
+    # deleteMany: List['InternalReceivablesScalarWhereInput']
+    # upsert: List['InternalReceivablesUpserteWithWhereUniqueWithoutRelationsInput']
+
+
+class InternalReceivablesUpdateOneWithoutRelationsInput(TypedDict, total=False):
+    create: 'InternalReceivablesCreateWithoutRelationsInput'
+    connect: 'InternalReceivablesWhereUniqueInput'
+    connect_or_create: 'InternalReceivablesConnectOrCreateWithoutRelationsInput'
+    disconnect: bool
+    delete: bool
+
+    # TODO
+    # update: 'InternalReceivablesUpdateInput'
+    # upsert: 'InternalReceivablesUpsertWithoutRelationsInput'
+
+
+class InternalReceivablesUpsertInput(TypedDict):
+    create: 'InternalReceivablesCreateInput'
+    update: 'InternalReceivablesUpdateInput'  # pyright: ignore[reportIncompatibleMethodOverride]
+
+
+_InternalReceivables_id_OrderByInput = TypedDict(
+    '_InternalReceivables_id_OrderByInput',
+    {
+        'id': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_category_OrderByInput = TypedDict(
+    '_InternalReceivables_category_OrderByInput',
+    {
+        'category': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_entity_name_OrderByInput = TypedDict(
+    '_InternalReceivables_entity_name_OrderByInput',
+    {
+        'entity_name': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_entity_type_OrderByInput = TypedDict(
+    '_InternalReceivables_entity_type_OrderByInput',
+    {
+        'entity_type': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_phone_OrderByInput = TypedDict(
+    '_InternalReceivables_phone_OrderByInput',
+    {
+        'phone': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_financial_responsible_OrderByInput = TypedDict(
+    '_InternalReceivables_financial_responsible_OrderByInput',
+    {
+        'financial_responsible': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_installment_OrderByInput = TypedDict(
+    '_InternalReceivables_installment_OrderByInput',
+    {
+        'installment': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_issue_date_OrderByInput = TypedDict(
+    '_InternalReceivables_issue_date_OrderByInput',
+    {
+        'issue_date': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_due_date_OrderByInput = TypedDict(
+    '_InternalReceivables_due_date_OrderByInput',
+    {
+        'due_date': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_full_amount_OrderByInput = TypedDict(
+    '_InternalReceivables_full_amount_OrderByInput',
+    {
+        'full_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_discount_amount_OrderByInput = TypedDict(
+    '_InternalReceivables_discount_amount_OrderByInput',
+    {
+        'discount_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_updated_amount_OrderByInput = TypedDict(
+    '_InternalReceivables_updated_amount_OrderByInput',
+    {
+        'updated_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_paid_amount_OrderByInput = TypedDict(
+    '_InternalReceivables_paid_amount_OrderByInput',
+    {
+        'paid_amount': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_notes_OrderByInput = TypedDict(
+    '_InternalReceivables_notes_OrderByInput',
+    {
+        'notes': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_status_OrderByInput = TypedDict(
+    '_InternalReceivables_status_OrderByInput',
+    {
+        'status': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_contract_status_OrderByInput = TypedDict(
+    '_InternalReceivables_contract_status_OrderByInput',
+    {
+        'contract_status': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_source_file_name_OrderByInput = TypedDict(
+    '_InternalReceivables_source_file_name_OrderByInput',
+    {
+        'source_file_name': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_created_at_OrderByInput = TypedDict(
+    '_InternalReceivables_created_at_OrderByInput',
+    {
+        'created_at': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_RelevanceInner = TypedDict(
+    '_InternalReceivables_RelevanceInner',
+    {
+        'fields': 'List[InternalReceivablesScalarFieldKeys]',
+        'search': 'str',
+        'sort': 'SortOrder',
+    },
+    total=True
+)
+
+_InternalReceivables_RelevanceOrderByInput = TypedDict(
+    '_InternalReceivables_RelevanceOrderByInput',
+    {
+        '_relevance': '_InternalReceivables_RelevanceInner',
+    },
+    total=True
+)
+
+InternalReceivablesOrderByInput = Union[
+    '_InternalReceivables_id_OrderByInput',
+    '_InternalReceivables_category_OrderByInput',
+    '_InternalReceivables_entity_name_OrderByInput',
+    '_InternalReceivables_entity_type_OrderByInput',
+    '_InternalReceivables_phone_OrderByInput',
+    '_InternalReceivables_financial_responsible_OrderByInput',
+    '_InternalReceivables_installment_OrderByInput',
+    '_InternalReceivables_issue_date_OrderByInput',
+    '_InternalReceivables_due_date_OrderByInput',
+    '_InternalReceivables_full_amount_OrderByInput',
+    '_InternalReceivables_discount_amount_OrderByInput',
+    '_InternalReceivables_updated_amount_OrderByInput',
+    '_InternalReceivables_paid_amount_OrderByInput',
+    '_InternalReceivables_notes_OrderByInput',
+    '_InternalReceivables_status_OrderByInput',
+    '_InternalReceivables_contract_status_OrderByInput',
+    '_InternalReceivables_source_file_name_OrderByInput',
+    '_InternalReceivables_created_at_OrderByInput',
+    '_InternalReceivables_RelevanceOrderByInput',
+]
+
+
+
+# recursive InternalReceivables types
+# TODO: cleanup these types
+
+
+
+InternalReceivablesRelationFilter = TypedDict(
+    'InternalReceivablesRelationFilter',
+    {
+        'is': 'InternalReceivablesWhereInput',
+        'is_not': 'InternalReceivablesWhereInput',
+    },
+    total=False,
+)
+
+
+class InternalReceivablesListRelationFilter(TypedDict, total=False):
+    some: 'InternalReceivablesWhereInput'
+    none: 'InternalReceivablesWhereInput'
+    every: 'InternalReceivablesWhereInput'
+
+
+class InternalReceivablesInclude(TypedDict, total=False):
+    """InternalReceivables relational arguments"""
+
+
+class IngestionLogsIncludeFromInternalReceivables(TypedDict, total=False):
+    """Relational arguments for InternalReceivables"""
+
+
+class IngestionLogsArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    include: 'IngestionLogsIncludeFromIngestionLogs'
+
+
+class FindManyIngestionLogsArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    take: int
+    skip: int
+    order_by: Union['IngestionLogsOrderByInput', List['IngestionLogsOrderByInput']]
+    where: 'IngestionLogsWhereInput'
+    cursor: 'IngestionLogsWhereUniqueInput'
+    distinct: List['IngestionLogsScalarFieldKeys']
+    include: 'IngestionLogsIncludeFromIngestionLogs'
+
+
+class BankTransactionsIncludeFromInternalReceivables(TypedDict, total=False):
+    """Relational arguments for InternalReceivables"""
+
+
+class BankTransactionsArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    include: 'BankTransactionsIncludeFromBankTransactions'
+
+
+class FindManyBankTransactionsArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    take: int
+    skip: int
+    order_by: Union['BankTransactionsOrderByInput', List['BankTransactionsOrderByInput']]
+    where: 'BankTransactionsWhereInput'
+    cursor: 'BankTransactionsWhereUniqueInput'
+    distinct: List['BankTransactionsScalarFieldKeys']
+    include: 'BankTransactionsIncludeFromBankTransactions'
+
+
+class InternalPaymentsIncludeFromInternalReceivables(TypedDict, total=False):
+    """Relational arguments for InternalReceivables"""
+
+
+class InternalPaymentsArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class FindManyInternalPaymentsArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    take: int
+    skip: int
+    order_by: Union['InternalPaymentsOrderByInput', List['InternalPaymentsOrderByInput']]
+    where: 'InternalPaymentsWhereInput'
+    cursor: 'InternalPaymentsWhereUniqueInput'
+    distinct: List['InternalPaymentsScalarFieldKeys']
+    include: 'InternalPaymentsIncludeFromInternalPayments'
+
+
+class InternalReceivablesIncludeFromInternalReceivables(TypedDict, total=False):
+    """Relational arguments for InternalReceivables"""
+
+
+class InternalReceivablesArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
+class FindManyInternalReceivablesArgsFromInternalReceivables(TypedDict, total=False):
+    """Arguments for InternalReceivables"""
+    take: int
+    skip: int
+    order_by: Union['InternalReceivablesOrderByInput', List['InternalReceivablesOrderByInput']]
+    where: 'InternalReceivablesWhereInput'
+    cursor: 'InternalReceivablesWhereUniqueInput'
+    distinct: List['InternalReceivablesScalarFieldKeys']
+    include: 'InternalReceivablesIncludeFromInternalReceivables'
+
+
+
+
+FindManyInternalReceivablesArgs = FindManyInternalReceivablesArgsFromInternalReceivables
+FindFirstInternalReceivablesArgs = FindManyInternalReceivablesArgsFromInternalReceivables
+
+
+class InternalReceivablesWhereInput(TypedDict, total=False):
+    """InternalReceivables arguments for searching"""
+    id: Union[_int, 'types.IntFilter']
+    category: Union[None, _str, 'types.StringFilter']
+    entity_name: Union[None, _str, 'types.StringFilter']
+    entity_type: Union[None, _str, 'types.StringFilter']
+    phone: Union[None, _str, 'types.StringFilter']
+    financial_responsible: Union[None, _str, 'types.StringFilter']
+    installment: Union[None, _str, 'types.StringFilter']
+    issue_date: Union[None, datetime.datetime, 'types.DateTimeFilter']
+    due_date: Union[None, datetime.datetime, 'types.DateTimeFilter']
+    full_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    discount_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    updated_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    paid_amount: Union[None, decimal.Decimal, 'types.DecimalFilter']
+    notes: Union[None, _str, 'types.StringFilter']
+    status: Union[None, _str, 'types.StringFilter']
+    contract_status: Union[None, _str, 'types.StringFilter']
+    source_file_name: Union[_str, 'types.StringFilter']
+    created_at: Union[datetime.datetime, 'types.DateTimeFilter']
+
+    # should be noted that AND and NOT should be Union['InternalReceivablesWhereInput', List['InternalReceivablesWhereInput']]
+    # but this causes mypy to hang :/
+    AND: List['InternalReceivablesWhereInput']
+    OR: List['InternalReceivablesWhereInput']
+    NOT: List['InternalReceivablesWhereInput']
+
+
+
+# aggregate InternalReceivables types
+
+
+class InternalReceivablesScalarWhereWithAggregatesInput(TypedDict, total=False):
+    """InternalReceivables arguments for searching"""
+    id: Union[_int, 'types.IntWithAggregatesFilter']
+    category: Union[_str, 'types.StringWithAggregatesFilter']
+    entity_name: Union[_str, 'types.StringWithAggregatesFilter']
+    entity_type: Union[_str, 'types.StringWithAggregatesFilter']
+    phone: Union[_str, 'types.StringWithAggregatesFilter']
+    financial_responsible: Union[_str, 'types.StringWithAggregatesFilter']
+    installment: Union[_str, 'types.StringWithAggregatesFilter']
+    issue_date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    due_date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    full_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    discount_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    updated_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    paid_amount: Union[decimal.Decimal, 'types.DecimalWithAggregatesFilter']
+    notes: Union[_str, 'types.StringWithAggregatesFilter']
+    status: Union[_str, 'types.StringWithAggregatesFilter']
+    contract_status: Union[_str, 'types.StringWithAggregatesFilter']
+    source_file_name: Union[_str, 'types.StringWithAggregatesFilter']
+    created_at: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+    AND: List['InternalReceivablesScalarWhereWithAggregatesInput']
+    OR: List['InternalReceivablesScalarWhereWithAggregatesInput']
+    NOT: List['InternalReceivablesScalarWhereWithAggregatesInput']
+
+
+
+class InternalReceivablesGroupByOutput(TypedDict, total=False):
+    id: _int
+    category: _str
+    entity_name: _str
+    entity_type: _str
+    phone: _str
+    financial_responsible: _str
+    installment: _str
+    issue_date: datetime.datetime
+    due_date: datetime.datetime
+    full_amount: decimal.Decimal
+    discount_amount: decimal.Decimal
+    updated_amount: decimal.Decimal
+    paid_amount: decimal.Decimal
+    notes: _str
+    status: _str
+    contract_status: _str
+    source_file_name: _str
+    created_at: datetime.datetime
+    _sum: 'InternalReceivablesSumAggregateOutput'
+    _avg: 'InternalReceivablesAvgAggregateOutput'
+    _min: 'InternalReceivablesMinAggregateOutput'
+    _max: 'InternalReceivablesMaxAggregateOutput'
+    _count: 'InternalReceivablesCountAggregateOutput'
+
+
+class InternalReceivablesAvgAggregateOutput(TypedDict, total=False):
+    """InternalReceivables output for aggregating averages"""
+    id: float
+
+
+class InternalReceivablesSumAggregateOutput(TypedDict, total=False):
+    """InternalReceivables output for aggregating sums"""
+    id: _int
+
+
+class InternalReceivablesScalarAggregateOutput(TypedDict, total=False):
+    """InternalReceivables output including scalar fields"""
+    id: _int
+    category: _str
+    entity_name: _str
+    entity_type: _str
+    phone: _str
+    financial_responsible: _str
+    installment: _str
+    issue_date: datetime.datetime
+    due_date: datetime.datetime
+    full_amount: decimal.Decimal
+    discount_amount: decimal.Decimal
+    updated_amount: decimal.Decimal
+    paid_amount: decimal.Decimal
+    notes: _str
+    status: _str
+    contract_status: _str
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+InternalReceivablesMinAggregateOutput = InternalReceivablesScalarAggregateOutput
+InternalReceivablesMaxAggregateOutput = InternalReceivablesScalarAggregateOutput
+
+
+class InternalReceivablesMaxAggregateInput(TypedDict, total=False):
+    """InternalReceivables input for aggregating by max"""
+    id: bool
+    category: bool
+    entity_name: bool
+    entity_type: bool
+    phone: bool
+    financial_responsible: bool
+    installment: bool
+    issue_date: bool
+    due_date: bool
+    full_amount: bool
+    discount_amount: bool
+    updated_amount: bool
+    paid_amount: bool
+    notes: bool
+    status: bool
+    contract_status: bool
+    source_file_name: bool
+    created_at: bool
+
+
+class InternalReceivablesMinAggregateInput(TypedDict, total=False):
+    """InternalReceivables input for aggregating by min"""
+    id: bool
+    category: bool
+    entity_name: bool
+    entity_type: bool
+    phone: bool
+    financial_responsible: bool
+    installment: bool
+    issue_date: bool
+    due_date: bool
+    full_amount: bool
+    discount_amount: bool
+    updated_amount: bool
+    paid_amount: bool
+    notes: bool
+    status: bool
+    contract_status: bool
+    source_file_name: bool
+    created_at: bool
+
+
+class InternalReceivablesNumberAggregateInput(TypedDict, total=False):
+    """InternalReceivables input for aggregating numbers"""
+    id: bool
+
+
+InternalReceivablesAvgAggregateInput = InternalReceivablesNumberAggregateInput
+InternalReceivablesSumAggregateInput = InternalReceivablesNumberAggregateInput
+
+
+InternalReceivablesCountAggregateInput = TypedDict(
+    'InternalReceivablesCountAggregateInput',
+    {
+        'id': bool,
+        'category': bool,
+        'entity_name': bool,
+        'entity_type': bool,
+        'phone': bool,
+        'financial_responsible': bool,
+        'installment': bool,
+        'issue_date': bool,
+        'due_date': bool,
+        'full_amount': bool,
+        'discount_amount': bool,
+        'updated_amount': bool,
+        'paid_amount': bool,
+        'notes': bool,
+        'status': bool,
+        'contract_status': bool,
+        'source_file_name': bool,
+        'created_at': bool,
+        '_all': bool,
+    },
+    total=False,
+)
+
+InternalReceivablesCountAggregateOutput = TypedDict(
+    'InternalReceivablesCountAggregateOutput',
+    {
+        'id': int,
+        'category': int,
+        'entity_name': int,
+        'entity_type': int,
+        'phone': int,
+        'financial_responsible': int,
+        'installment': int,
+        'issue_date': int,
+        'due_date': int,
+        'full_amount': int,
+        'discount_amount': int,
+        'updated_amount': int,
+        'paid_amount': int,
+        'notes': int,
+        'status': int,
+        'contract_status': int,
+        'source_file_name': int,
+        'created_at': int,
+        '_all': int,
+    },
+    total=False,
+)
+
+
+InternalReceivablesKeys = Literal[
+    'id',
+    'category',
+    'entity_name',
+    'entity_type',
+    'phone',
+    'financial_responsible',
+    'installment',
+    'issue_date',
+    'due_date',
+    'full_amount',
+    'discount_amount',
+    'updated_amount',
+    'paid_amount',
+    'notes',
+    'status',
+    'contract_status',
+    'source_file_name',
+    'created_at',
+]
+InternalReceivablesScalarFieldKeys = Literal[
+    'id',
+    'category',
+    'entity_name',
+    'entity_type',
+    'phone',
+    'financial_responsible',
+    'installment',
+    'issue_date',
+    'due_date',
+    'full_amount',
+    'discount_amount',
+    'updated_amount',
+    'paid_amount',
+    'notes',
+    'status',
+    'contract_status',
+    'source_file_name',
+    'created_at',
+]
+InternalReceivablesScalarFieldKeysT = TypeVar('InternalReceivablesScalarFieldKeysT', bound=InternalReceivablesScalarFieldKeys)
+
+InternalReceivablesRelationalFieldKeys = _NoneType
 
 
 

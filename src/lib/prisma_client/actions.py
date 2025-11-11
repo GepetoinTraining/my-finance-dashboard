@@ -2125,6 +2125,2052 @@ class BankTransactionsActions(Generic[_PrismaModelT]):
         return resp['data']['result']  # type: ignore[no-any-return]
 
 
+class InternalPaymentsActions(Generic[_PrismaModelT]):
+    __slots__ = (
+        '_client',
+        '_model',
+    )
+
+    def __init__(self, client: Prisma, model: Type[_PrismaModelT]) -> None:
+        self._client = client
+        self._model = model
+
+    async def query_raw(
+        self,
+        query: LiteralString,
+        *args: Any,
+    ) -> List[_PrismaModelT]:
+        """Execute a raw SQL query
+
+        Parameters
+        ----------
+        query
+            The raw SQL query string to be executed
+        *args
+            Parameters to be passed to the SQL query, these MUST be used over
+            string formatting to avoid an SQL injection vulnerability
+
+        Returns
+        -------
+        List[prisma.models.InternalPayments]
+            The records returned by the SQL query
+
+        Raises
+        ------
+        prisma_errors.RawQueryError
+            This could be due to invalid syntax, mismatched number of parameters or any other error
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        users = await InternalPayments.prisma().query_raw(
+            'SELECT * FROM InternalPayments WHERE id = $1',
+            1775811865,
+        )
+        ```
+        """
+        return await self._client.query_raw(query, *args, model=self._model)
+
+    async def query_first(
+        self,
+        query: LiteralString,
+        *args: Any,
+    ) -> Optional[_PrismaModelT]:
+        """Execute a raw SQL query, returning the first result
+
+        Parameters
+        ----------
+        query
+            The raw SQL query string to be executed
+        *args
+            Parameters to be passed to the SQL query, these MUST be used over
+            string formatting to avoid an SQL injection vulnerability
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The first record returned by the SQL query
+        None
+            The raw SQL query did not return any records
+
+        Raises
+        ------
+        prisma_errors.RawQueryError
+            This could be due to invalid syntax, mismatched number of parameters or any other error
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        user = await InternalPayments.prisma().query_first(
+            'SELECT * FROM InternalPayments WHERE category = $1',
+            'ijdbeffgg',
+        )
+        ```
+        """
+        return await self._client.query_first(query, *args, model=self._model)
+
+    async def create(
+        self,
+        data: types.InternalPaymentsCreateInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> _PrismaModelT:
+        """Create a new InternalPayments record.
+
+        Parameters
+        ----------
+        data
+            InternalPayments record data
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The created InternalPayments record
+
+        Raises
+        ------
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # create a InternalPayments record from just the required fields
+        internalpayments = await InternalPayments.prisma().create(
+            data={
+                # data to create a InternalPayments record
+                'source_file_name': 'jjfeafhfj',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='create',
+            model=self._model,
+            arguments={
+                'data': data,
+                'include': include,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def create_many(
+        self,
+        data: List[types.InternalPaymentsCreateWithoutRelationsInput],
+        *,
+        skip_duplicates: Optional[bool] = None,
+    ) -> int:
+        """Create multiple InternalPayments records at once.
+
+        This function is *not* available when using SQLite.
+
+        Parameters
+        ----------
+        data
+            List of InternalPayments record data
+        skip_duplicates
+            Boolean flag for ignoring unique constraint errors
+
+        Returns
+        -------
+        int
+            The total number of records created
+
+        Raises
+        ------
+        prisma.errors.UnsupportedDatabaseError
+            Attempting to query when using SQLite
+        prisma.errors.UniqueViolationError
+            A unique constraint check has failed, these can be ignored with the `skip_duplicates` argument
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        total = await InternalPayments.prisma().create_many(
+            data=[
+                {
+                    # data to create a InternalPayments record
+                    'source_file_name': 'cbachdgfce',
+                },
+                {
+                    # data to create a InternalPayments record
+                    'source_file_name': 'chbfcacbd',
+                },
+            ],
+            skip_duplicates=True,
+        )
+        ```
+        """
+        if skip_duplicates and self._client._active_provider in CREATE_MANY_SKIP_DUPLICATES_UNSUPPORTED:
+            raise errors.UnsupportedDatabaseError(self._client._active_provider, 'create_many_skip_duplicates')
+
+        resp = await self._client._execute(
+            method='create_many',
+            model=self._model,
+            arguments={
+                'data': data,
+                'skipDuplicates': skip_duplicates,
+            },
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    async def delete(
+        self,
+        where: types.InternalPaymentsWhereUniqueInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Delete a single InternalPayments record.
+
+        Parameters
+        ----------
+        where
+            InternalPayments filter to select the record to be deleted, must be unique
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The deleted InternalPayments record
+        None
+            Could not find a record to delete
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalpayments = await InternalPayments.prisma().delete(
+            where={
+                'id': 456633834,
+            },
+        )
+        ```
+        """
+        try:
+            resp = await self._client._execute(
+                method='delete',
+                model=self._model,
+                arguments={
+                    'where': where,
+                    'include': include,
+                },
+            )
+        except errors.RecordNotFoundError:
+            return None
+
+        return model_parse(self._model, resp['data']['result'])
+
+    async def find_unique(
+        self,
+        where: types.InternalPaymentsWhereUniqueInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Find a unique InternalPayments record.
+
+        Parameters
+        ----------
+        where
+            InternalPayments filter to find the record, must be unique
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The found InternalPayments record
+        None
+            No record matching the given input could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalpayments = await InternalPayments.prisma().find_unique(
+            where={
+                'id': 2058258651,
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_unique',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+        result = resp['data']['result']
+        if result is None:
+            return None
+        return model_parse(self._model, result)
+
+    async def find_unique_or_raise(
+        self,
+        where: types.InternalPaymentsWhereUniqueInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> _PrismaModelT:
+        """Find a unique InternalPayments record. Raises `RecordNotFoundError` if no record is found.
+
+        Parameters
+        ----------
+        where
+            InternalPayments filter to find the record, must be unique
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The found InternalPayments record
+
+        Raises
+        ------
+        prisma.errors.RecordNotFoundError
+            No record was found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalpayments = await InternalPayments.prisma().find_unique_or_raise(
+            where={
+                'id': 1583689592,
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_unique_or_raise',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def find_many(
+        self,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+        cursor: Optional[types.InternalPaymentsWhereUniqueInput] = None,
+        include: Optional[types.InternalPaymentsInclude] = None,
+        order: Optional[Union[types.InternalPaymentsOrderByInput, List[types.InternalPaymentsOrderByInput]]] = None,
+        distinct: Optional[List[types.InternalPaymentsScalarFieldKeys]] = None,
+    ) -> List[_PrismaModelT]:
+        """Find multiple InternalPayments records.
+
+        An empty list is returned if no records could be found.
+
+        Parameters
+        ----------
+        take
+            Limit the maximum number of InternalPayments records returned
+        skip
+            Ignore the first N results
+        where
+            InternalPayments filter to select records
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+        order
+            Order the returned InternalPayments records by any field
+        distinct
+            Filter InternalPayments records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        List[prisma.models.InternalPayments]
+            The list of all InternalPayments records that could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the first 10 InternalPayments records
+        internalpayments = await InternalPayments.prisma().find_many(take=10)
+
+        # find the first 5 InternalPayments records ordered by the entity_name field
+        internalpayments = await InternalPayments.prisma().find_many(
+            take=5,
+            order={
+                'entity_name': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_many',
+            model=self._model,
+            arguments={
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        return [model_parse(self._model, r) for r in resp['data']['result']]
+
+    async def find_first(
+        self,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+        cursor: Optional[types.InternalPaymentsWhereUniqueInput] = None,
+        include: Optional[types.InternalPaymentsInclude] = None,
+        order: Optional[Union[types.InternalPaymentsOrderByInput, List[types.InternalPaymentsOrderByInput]]] = None,
+        distinct: Optional[List[types.InternalPaymentsScalarFieldKeys]] = None,
+    ) -> Optional[_PrismaModelT]:
+        """Find a single InternalPayments record.
+
+        Parameters
+        ----------
+        skip
+            Ignore the first N records
+        where
+            InternalPayments filter to select the record
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+        order
+            Order the returned InternalPayments records by any field
+        distinct
+            Filter InternalPayments records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The first InternalPayments record found, matching the given arguments
+        None
+            No record could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the second InternalPayments record ordered by the entity_type field
+        internalpayments = await InternalPayments.prisma().find_first(
+            skip=1,
+            order={
+                'entity_type': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_first',
+            model=self._model,
+            arguments={
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        result = resp['data']['result']
+        if result is None:
+            return None
+
+        return model_parse(self._model, result)
+
+    async def find_first_or_raise(
+        self,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+        cursor: Optional[types.InternalPaymentsWhereUniqueInput] = None,
+        include: Optional[types.InternalPaymentsInclude] = None,
+        order: Optional[Union[types.InternalPaymentsOrderByInput, List[types.InternalPaymentsOrderByInput]]] = None,
+        distinct: Optional[List[types.InternalPaymentsScalarFieldKeys]] = None,
+    ) -> _PrismaModelT:
+        """Find a single InternalPayments record. Raises `RecordNotFoundError` if no record was found.
+
+        Parameters
+        ----------
+        skip
+            Ignore the first N records
+        where
+            InternalPayments filter to select the record
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+        order
+            Order the returned InternalPayments records by any field
+        distinct
+            Filter InternalPayments records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The first InternalPayments record found, matching the given arguments
+
+        Raises
+        ------
+        prisma.errors.RecordNotFoundError
+            No record was found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the second InternalPayments record ordered by the installment field
+        internalpayments = await InternalPayments.prisma().find_first_or_raise(
+            skip=1,
+            order={
+                'installment': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_first_or_raise',
+            model=self._model,
+            arguments={
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def update(
+        self,
+        data: types.InternalPaymentsUpdateInput,
+        where: types.InternalPaymentsWhereUniqueInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Update a single InternalPayments record.
+
+        Parameters
+        ----------
+        data
+            InternalPayments record data specifying what to update
+        where
+            InternalPayments filter to select the unique record to create / update
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The updated InternalPayments record
+        None
+            No record could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        internalpayments = await InternalPayments.prisma().update(
+            where={
+                'id': 878442065,
+            },
+            data={
+                # data to update the InternalPayments record to
+            },
+        )
+        ```
+        """
+        try:
+            resp = await self._client._execute(
+                method='update',
+                model=self._model,
+                arguments={
+                    'data': data,
+                    'where': where,
+                    'include': include,
+                },
+            )
+        except errors.RecordNotFoundError:
+            return None
+
+        return model_parse(self._model, resp['data']['result'])
+
+    async def upsert(
+        self,
+        where: types.InternalPaymentsWhereUniqueInput,
+        data: types.InternalPaymentsUpsertInput,
+        include: Optional[types.InternalPaymentsInclude] = None,
+    ) -> _PrismaModelT:
+        """Updates an existing record or create a new one
+
+        Parameters
+        ----------
+        where
+            InternalPayments filter to select the unique record to create / update
+        data
+            Data specifying what fields to set on create and update
+        include
+            Specifies which relations should be loaded on the returned InternalPayments model
+
+        Returns
+        -------
+        prisma.models.InternalPayments
+            The created or updated InternalPayments record
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalpayments = await InternalPayments.prisma().upsert(
+            where={
+                'id': 1675280054,
+            },
+            data={
+                'create': {
+                    'id': 1675280054,
+                    'source_file_name': 'chbfcacbd',
+                },
+                'update': {
+                    'source_file_name': 'chbfcacbd',
+                },
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='upsert',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+                'create': data.get('create'),
+                'update': data.get('update'),
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def update_many(
+        self,
+        data: types.InternalPaymentsUpdateManyMutationInput,
+        where: types.InternalPaymentsWhereInput,
+    ) -> int:
+        """Update multiple InternalPayments records
+
+        Parameters
+        ----------
+        data
+            InternalPayments data to update the selected InternalPayments records to
+        where
+            Filter to select the InternalPayments records to update
+
+        Returns
+        -------
+        int
+            The total number of InternalPayments records that were updated
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # update all InternalPayments records
+        total = await InternalPayments.prisma().update_many(
+            data={
+                'issue_date': datetime.datetime.utcnow()
+            },
+            where={}
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='update_many',
+            model=self._model,
+            arguments={'data': data, 'where': where,},
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    @overload
+    async def count(
+        self,
+        select: None = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+        cursor: Optional[types.InternalPaymentsWhereUniqueInput] = None,
+    ) -> int:
+        """Count the number of InternalPayments records present in the database
+
+        Parameters
+        ----------
+        select
+            Select the InternalPayments fields to be counted
+        take
+            Limit the maximum result
+        skip
+            Ignore the first N records
+        where
+            InternalPayments filter to find records
+        cursor
+            Specifies the position in the list to start counting results from, (typically an ID field)
+        order
+            This parameter is deprecated and will be removed in a future release
+
+        Returns
+        -------
+        int
+            The total number of records found, returned if `select` is not given
+
+        prisma.types.InternalPaymentsCountAggregateOutput
+            Data returned when `select` is used, the fields present in this dictionary will
+            match the fields passed in the `select` argument
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # total: int
+        total = await InternalPayments.prisma().count()
+
+        # results: prisma.types.InternalPaymentsCountAggregateOutput
+        results = await InternalPayments.prisma().count(
+            select={
+                '_all': True,
+                'due_date': True,
+            },
+        )
+        ```
+        """
+
+
+    @overload
+    async def count(
+        self,
+        select: types.InternalPaymentsCountAggregateInput,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+        cursor: Optional[types.InternalPaymentsWhereUniqueInput] = None,
+    ) -> types.InternalPaymentsCountAggregateOutput:
+        ...
+
+    async def count(
+        self,
+        select: Optional[types.InternalPaymentsCountAggregateInput] = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+        cursor: Optional[types.InternalPaymentsWhereUniqueInput] = None,
+    ) -> Union[int, types.InternalPaymentsCountAggregateOutput]:
+        """Count the number of InternalPayments records present in the database
+
+        Parameters
+        ----------
+        select
+            Select the InternalPayments fields to be counted
+        take
+            Limit the maximum result
+        skip
+            Ignore the first N records
+        where
+            InternalPayments filter to find records
+        cursor
+            Specifies the position in the list to start counting results from, (typically an ID field)
+        order
+            This parameter is deprecated and will be removed in a future release
+
+        Returns
+        -------
+        int
+            The total number of records found, returned if `select` is not given
+
+        prisma.types.InternalPaymentsCountAggregateOutput
+            Data returned when `select` is used, the fields present in this dictionary will
+            match the fields passed in the `select` argument
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # total: int
+        total = await InternalPayments.prisma().count()
+
+        # results: prisma.types.InternalPaymentsCountAggregateOutput
+        results = await InternalPayments.prisma().count(
+            select={
+                '_all': True,
+                'full_amount': True,
+            },
+        )
+        ```
+        """
+
+        # TODO: this selection building should be moved to the QueryBuilder
+        #
+        # note the distinction between checking for `not select` here and `select is None`
+        # later is to handle the case that the given select dictionary is empty, this
+        # is a limitation of our types.
+        if not select:
+            root_selection = ['_count { _all }']
+        else:
+
+            root_selection = [
+                '_count {{ {0} }}'.format(' '.join(k for k, v in select.items() if v is True))
+            ]
+
+        resp = await self._client._execute(
+            method='count',
+            model=self._model,
+            arguments={
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'cursor': cursor,
+            },
+            root_selection=root_selection,
+        )
+
+        if select is None:
+            return cast(int, resp['data']['result']['_count']['_all'])
+        else:
+            return cast(types.InternalPaymentsCountAggregateOutput, resp['data']['result']['_count'])
+
+    async def delete_many(
+        self,
+        where: Optional[types.InternalPaymentsWhereInput] = None
+    ) -> int:
+        """Delete multiple InternalPayments records.
+
+        Parameters
+        ----------
+        where
+            Optional InternalPayments filter to find the records to be deleted
+
+        Returns
+        -------
+        int
+            The total number of InternalPayments records that were deleted
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # delete all InternalPayments records
+        total = await InternalPayments.prisma().delete_many()
+        ```
+        """
+        resp = await self._client._execute(
+            method='delete_many',
+            model=self._model,
+            arguments={'where': where},
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    # TODO: make this easier to work with safely, currently output fields are typed as
+    #       not required, we should refactor the return type
+    # TODO: consider returning a Dict where the keys are a Tuple of the `by` selection
+    # TODO: statically type that the order argument is required when take or skip are present
+    async def group_by(
+        self,
+        by: List['types.InternalPaymentsScalarFieldKeysT'],
+        *,
+        where: Optional['types.InternalPaymentsWhereInput'] = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        avg: Optional['types.InternalPaymentsAvgAggregateInput'] = None,
+        sum: Optional['types.InternalPaymentsSumAggregateInput'] = None,
+        min: Optional['types.InternalPaymentsMinAggregateInput'] = None,
+        max: Optional['types.InternalPaymentsMaxAggregateInput'] = None,
+        having: Optional['types.InternalPaymentsScalarWhereWithAggregatesInput'] = None,
+        count: Optional[Union[bool, 'types.InternalPaymentsCountAggregateInput']] = None,
+        order: Optional[Union[Mapping['types.InternalPaymentsScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.InternalPaymentsScalarFieldKeysT', 'types.SortOrder']]]] = None,
+    ) -> List['types.InternalPaymentsGroupByOutput']:
+        """Group InternalPayments records by one or more field values and perform aggregations
+        each group such as finding the average.
+
+        Parameters
+        ----------
+        by
+            List of scalar InternalPayments fields to group records by
+        where
+            InternalPayments filter to select records
+        take
+            Limit the maximum number of InternalPayments records returned
+        skip
+            Ignore the first N records
+        avg
+            Adds the average of all values of the specified fields to the `_avg` field
+            in the returned data.
+        sum
+            Adds the sum of all values of the specified fields to the `_sum` field
+            in the returned data.
+        min
+            Adds the smallest available value for the specified fields to the `_min` field
+            in the returned data.
+        max
+            Adds the largest available value for the specified fields to the `_max` field
+            in the returned data.
+        count
+            Adds a count of non-fields to the `_count` field in the returned data.
+        having
+            Allows you to filter groups by an aggregate value - for example only return
+            groups having an average age less than 50.
+        order
+            Lets you order the returned list by any property that is also present in `by`.
+            Only **one** field is allowed at a time.
+
+        Returns
+        -------
+        List[prisma.types.InternalPaymentsGroupByOutput]
+            A list of dictionaries representing the InternalPayments record,
+            this will also have additional fields present if aggregation arguments
+            are used (see the above parameters)
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # group InternalPayments records by discount_amount values
+        # and count how many records are in each group
+        results = await InternalPayments.prisma().group_by(
+            ['discount_amount'],
+            count=True,
+        )
+        ```
+        """
+        if order is None:
+            if take is not None:
+                raise TypeError('Missing argument: \'order\' which is required when \'take\' is present')
+
+            if skip is not None:
+                raise TypeError('Missing argument: \'order\' which is required when \'skip\' is present')
+
+        root_selection: List[str] = [*by]
+        if avg is not None:
+            root_selection.append(_select_fields('_avg', avg))
+
+        if min is not None:
+            root_selection.append(_select_fields('_min', min))
+
+        if sum is not None:
+            root_selection.append(_select_fields('_sum', sum))
+
+        if max is not None:
+            root_selection.append(_select_fields('_max', max))
+
+        if count is not None:
+            if count is True:
+                root_selection.append('_count { _all }')
+            elif isinstance(count, dict):
+                root_selection.append(_select_fields('_count', count))
+
+        resp = await self._client._execute(
+            method='group_by',
+            model=self._model,
+            arguments={
+                'by': by,
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'having': having,
+                'orderBy': order,
+            },
+            root_selection=root_selection,
+        )
+        return resp['data']['result']  # type: ignore[no-any-return]
+
+
+class InternalReceivablesActions(Generic[_PrismaModelT]):
+    __slots__ = (
+        '_client',
+        '_model',
+    )
+
+    def __init__(self, client: Prisma, model: Type[_PrismaModelT]) -> None:
+        self._client = client
+        self._model = model
+
+    async def query_raw(
+        self,
+        query: LiteralString,
+        *args: Any,
+    ) -> List[_PrismaModelT]:
+        """Execute a raw SQL query
+
+        Parameters
+        ----------
+        query
+            The raw SQL query string to be executed
+        *args
+            Parameters to be passed to the SQL query, these MUST be used over
+            string formatting to avoid an SQL injection vulnerability
+
+        Returns
+        -------
+        List[prisma.models.InternalReceivables]
+            The records returned by the SQL query
+
+        Raises
+        ------
+        prisma_errors.RawQueryError
+            This could be due to invalid syntax, mismatched number of parameters or any other error
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        users = await InternalReceivables.prisma().query_raw(
+            'SELECT * FROM InternalReceivables WHERE id = $1',
+            1627576247,
+        )
+        ```
+        """
+        return await self._client.query_raw(query, *args, model=self._model)
+
+    async def query_first(
+        self,
+        query: LiteralString,
+        *args: Any,
+    ) -> Optional[_PrismaModelT]:
+        """Execute a raw SQL query, returning the first result
+
+        Parameters
+        ----------
+        query
+            The raw SQL query string to be executed
+        *args
+            Parameters to be passed to the SQL query, these MUST be used over
+            string formatting to avoid an SQL injection vulnerability
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The first record returned by the SQL query
+        None
+            The raw SQL query did not return any records
+
+        Raises
+        ------
+        prisma_errors.RawQueryError
+            This could be due to invalid syntax, mismatched number of parameters or any other error
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        user = await InternalReceivables.prisma().query_first(
+            'SELECT * FROM InternalReceivables WHERE category = $1',
+            'cafeiaccbc',
+        )
+        ```
+        """
+        return await self._client.query_first(query, *args, model=self._model)
+
+    async def create(
+        self,
+        data: types.InternalReceivablesCreateInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> _PrismaModelT:
+        """Create a new InternalReceivables record.
+
+        Parameters
+        ----------
+        data
+            InternalReceivables record data
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The created InternalReceivables record
+
+        Raises
+        ------
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # create a InternalReceivables record from just the required fields
+        internalreceivables = await InternalReceivables.prisma().create(
+            data={
+                # data to create a InternalReceivables record
+                'source_file_name': 'gaddfhfh',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='create',
+            model=self._model,
+            arguments={
+                'data': data,
+                'include': include,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def create_many(
+        self,
+        data: List[types.InternalReceivablesCreateWithoutRelationsInput],
+        *,
+        skip_duplicates: Optional[bool] = None,
+    ) -> int:
+        """Create multiple InternalReceivables records at once.
+
+        This function is *not* available when using SQLite.
+
+        Parameters
+        ----------
+        data
+            List of InternalReceivables record data
+        skip_duplicates
+            Boolean flag for ignoring unique constraint errors
+
+        Returns
+        -------
+        int
+            The total number of records created
+
+        Raises
+        ------
+        prisma.errors.UnsupportedDatabaseError
+            Attempting to query when using SQLite
+        prisma.errors.UniqueViolationError
+            A unique constraint check has failed, these can be ignored with the `skip_duplicates` argument
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        total = await InternalReceivables.prisma().create_many(
+            data=[
+                {
+                    # data to create a InternalReceivables record
+                    'source_file_name': 'gieegcbeg',
+                },
+                {
+                    # data to create a InternalReceivables record
+                    'source_file_name': 'bgcffadich',
+                },
+            ],
+            skip_duplicates=True,
+        )
+        ```
+        """
+        if skip_duplicates and self._client._active_provider in CREATE_MANY_SKIP_DUPLICATES_UNSUPPORTED:
+            raise errors.UnsupportedDatabaseError(self._client._active_provider, 'create_many_skip_duplicates')
+
+        resp = await self._client._execute(
+            method='create_many',
+            model=self._model,
+            arguments={
+                'data': data,
+                'skipDuplicates': skip_duplicates,
+            },
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    async def delete(
+        self,
+        where: types.InternalReceivablesWhereUniqueInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Delete a single InternalReceivables record.
+
+        Parameters
+        ----------
+        where
+            InternalReceivables filter to select the record to be deleted, must be unique
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The deleted InternalReceivables record
+        None
+            Could not find a record to delete
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalreceivables = await InternalReceivables.prisma().delete(
+            where={
+                'id': 521827728,
+            },
+        )
+        ```
+        """
+        try:
+            resp = await self._client._execute(
+                method='delete',
+                model=self._model,
+                arguments={
+                    'where': where,
+                    'include': include,
+                },
+            )
+        except errors.RecordNotFoundError:
+            return None
+
+        return model_parse(self._model, resp['data']['result'])
+
+    async def find_unique(
+        self,
+        where: types.InternalReceivablesWhereUniqueInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Find a unique InternalReceivables record.
+
+        Parameters
+        ----------
+        where
+            InternalReceivables filter to find the record, must be unique
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The found InternalReceivables record
+        None
+            No record matching the given input could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalreceivables = await InternalReceivables.prisma().find_unique(
+            where={
+                'id': 1266032265,
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_unique',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+        result = resp['data']['result']
+        if result is None:
+            return None
+        return model_parse(self._model, result)
+
+    async def find_unique_or_raise(
+        self,
+        where: types.InternalReceivablesWhereUniqueInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> _PrismaModelT:
+        """Find a unique InternalReceivables record. Raises `RecordNotFoundError` if no record is found.
+
+        Parameters
+        ----------
+        where
+            InternalReceivables filter to find the record, must be unique
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The found InternalReceivables record
+
+        Raises
+        ------
+        prisma.errors.RecordNotFoundError
+            No record was found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalreceivables = await InternalReceivables.prisma().find_unique_or_raise(
+            where={
+                'id': 93253262,
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_unique_or_raise',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def find_many(
+        self,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+        cursor: Optional[types.InternalReceivablesWhereUniqueInput] = None,
+        include: Optional[types.InternalReceivablesInclude] = None,
+        order: Optional[Union[types.InternalReceivablesOrderByInput, List[types.InternalReceivablesOrderByInput]]] = None,
+        distinct: Optional[List[types.InternalReceivablesScalarFieldKeys]] = None,
+    ) -> List[_PrismaModelT]:
+        """Find multiple InternalReceivables records.
+
+        An empty list is returned if no records could be found.
+
+        Parameters
+        ----------
+        take
+            Limit the maximum number of InternalReceivables records returned
+        skip
+            Ignore the first N results
+        where
+            InternalReceivables filter to select records
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+        order
+            Order the returned InternalReceivables records by any field
+        distinct
+            Filter InternalReceivables records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        List[prisma.models.InternalReceivables]
+            The list of all InternalReceivables records that could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the first 10 InternalReceivables records
+        internalreceivables = await InternalReceivables.prisma().find_many(take=10)
+
+        # find the first 5 InternalReceivables records ordered by the entity_name field
+        internalreceivables = await InternalReceivables.prisma().find_many(
+            take=5,
+            order={
+                'entity_name': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_many',
+            model=self._model,
+            arguments={
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        return [model_parse(self._model, r) for r in resp['data']['result']]
+
+    async def find_first(
+        self,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+        cursor: Optional[types.InternalReceivablesWhereUniqueInput] = None,
+        include: Optional[types.InternalReceivablesInclude] = None,
+        order: Optional[Union[types.InternalReceivablesOrderByInput, List[types.InternalReceivablesOrderByInput]]] = None,
+        distinct: Optional[List[types.InternalReceivablesScalarFieldKeys]] = None,
+    ) -> Optional[_PrismaModelT]:
+        """Find a single InternalReceivables record.
+
+        Parameters
+        ----------
+        skip
+            Ignore the first N records
+        where
+            InternalReceivables filter to select the record
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+        order
+            Order the returned InternalReceivables records by any field
+        distinct
+            Filter InternalReceivables records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The first InternalReceivables record found, matching the given arguments
+        None
+            No record could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the second InternalReceivables record ordered by the entity_type field
+        internalreceivables = await InternalReceivables.prisma().find_first(
+            skip=1,
+            order={
+                'entity_type': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_first',
+            model=self._model,
+            arguments={
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        result = resp['data']['result']
+        if result is None:
+            return None
+
+        return model_parse(self._model, result)
+
+    async def find_first_or_raise(
+        self,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+        cursor: Optional[types.InternalReceivablesWhereUniqueInput] = None,
+        include: Optional[types.InternalReceivablesInclude] = None,
+        order: Optional[Union[types.InternalReceivablesOrderByInput, List[types.InternalReceivablesOrderByInput]]] = None,
+        distinct: Optional[List[types.InternalReceivablesScalarFieldKeys]] = None,
+    ) -> _PrismaModelT:
+        """Find a single InternalReceivables record. Raises `RecordNotFoundError` if no record was found.
+
+        Parameters
+        ----------
+        skip
+            Ignore the first N records
+        where
+            InternalReceivables filter to select the record
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+        order
+            Order the returned InternalReceivables records by any field
+        distinct
+            Filter InternalReceivables records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The first InternalReceivables record found, matching the given arguments
+
+        Raises
+        ------
+        prisma.errors.RecordNotFoundError
+            No record was found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the second InternalReceivables record ordered by the phone field
+        internalreceivables = await InternalReceivables.prisma().find_first_or_raise(
+            skip=1,
+            order={
+                'phone': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_first_or_raise',
+            model=self._model,
+            arguments={
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def update(
+        self,
+        data: types.InternalReceivablesUpdateInput,
+        where: types.InternalReceivablesWhereUniqueInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Update a single InternalReceivables record.
+
+        Parameters
+        ----------
+        data
+            InternalReceivables record data specifying what to update
+        where
+            InternalReceivables filter to select the unique record to create / update
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The updated InternalReceivables record
+        None
+            No record could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        internalreceivables = await InternalReceivables.prisma().update(
+            where={
+                'id': 2053047983,
+            },
+            data={
+                # data to update the InternalReceivables record to
+            },
+        )
+        ```
+        """
+        try:
+            resp = await self._client._execute(
+                method='update',
+                model=self._model,
+                arguments={
+                    'data': data,
+                    'where': where,
+                    'include': include,
+                },
+            )
+        except errors.RecordNotFoundError:
+            return None
+
+        return model_parse(self._model, resp['data']['result'])
+
+    async def upsert(
+        self,
+        where: types.InternalReceivablesWhereUniqueInput,
+        data: types.InternalReceivablesUpsertInput,
+        include: Optional[types.InternalReceivablesInclude] = None,
+    ) -> _PrismaModelT:
+        """Updates an existing record or create a new one
+
+        Parameters
+        ----------
+        where
+            InternalReceivables filter to select the unique record to create / update
+        data
+            Data specifying what fields to set on create and update
+        include
+            Specifies which relations should be loaded on the returned InternalReceivables model
+
+        Returns
+        -------
+        prisma.models.InternalReceivables
+            The created or updated InternalReceivables record
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        internalreceivables = await InternalReceivables.prisma().upsert(
+            where={
+                'id': 685333180,
+            },
+            data={
+                'create': {
+                    'id': 685333180,
+                    'source_file_name': 'bgcffadich',
+                },
+                'update': {
+                    'source_file_name': 'bgcffadich',
+                },
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='upsert',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+                'create': data.get('create'),
+                'update': data.get('update'),
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def update_many(
+        self,
+        data: types.InternalReceivablesUpdateManyMutationInput,
+        where: types.InternalReceivablesWhereInput,
+    ) -> int:
+        """Update multiple InternalReceivables records
+
+        Parameters
+        ----------
+        data
+            InternalReceivables data to update the selected InternalReceivables records to
+        where
+            Filter to select the InternalReceivables records to update
+
+        Returns
+        -------
+        int
+            The total number of InternalReceivables records that were updated
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # update all InternalReceivables records
+        total = await InternalReceivables.prisma().update_many(
+            data={
+                'financial_responsible': 'bchehecef'
+            },
+            where={}
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='update_many',
+            model=self._model,
+            arguments={'data': data, 'where': where,},
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    @overload
+    async def count(
+        self,
+        select: None = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+        cursor: Optional[types.InternalReceivablesWhereUniqueInput] = None,
+    ) -> int:
+        """Count the number of InternalReceivables records present in the database
+
+        Parameters
+        ----------
+        select
+            Select the InternalReceivables fields to be counted
+        take
+            Limit the maximum result
+        skip
+            Ignore the first N records
+        where
+            InternalReceivables filter to find records
+        cursor
+            Specifies the position in the list to start counting results from, (typically an ID field)
+        order
+            This parameter is deprecated and will be removed in a future release
+
+        Returns
+        -------
+        int
+            The total number of records found, returned if `select` is not given
+
+        prisma.types.InternalReceivablesCountAggregateOutput
+            Data returned when `select` is used, the fields present in this dictionary will
+            match the fields passed in the `select` argument
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # total: int
+        total = await InternalReceivables.prisma().count()
+
+        # results: prisma.types.InternalReceivablesCountAggregateOutput
+        results = await InternalReceivables.prisma().count(
+            select={
+                '_all': True,
+                'installment': True,
+            },
+        )
+        ```
+        """
+
+
+    @overload
+    async def count(
+        self,
+        select: types.InternalReceivablesCountAggregateInput,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+        cursor: Optional[types.InternalReceivablesWhereUniqueInput] = None,
+    ) -> types.InternalReceivablesCountAggregateOutput:
+        ...
+
+    async def count(
+        self,
+        select: Optional[types.InternalReceivablesCountAggregateInput] = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+        cursor: Optional[types.InternalReceivablesWhereUniqueInput] = None,
+    ) -> Union[int, types.InternalReceivablesCountAggregateOutput]:
+        """Count the number of InternalReceivables records present in the database
+
+        Parameters
+        ----------
+        select
+            Select the InternalReceivables fields to be counted
+        take
+            Limit the maximum result
+        skip
+            Ignore the first N records
+        where
+            InternalReceivables filter to find records
+        cursor
+            Specifies the position in the list to start counting results from, (typically an ID field)
+        order
+            This parameter is deprecated and will be removed in a future release
+
+        Returns
+        -------
+        int
+            The total number of records found, returned if `select` is not given
+
+        prisma.types.InternalReceivablesCountAggregateOutput
+            Data returned when `select` is used, the fields present in this dictionary will
+            match the fields passed in the `select` argument
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # total: int
+        total = await InternalReceivables.prisma().count()
+
+        # results: prisma.types.InternalReceivablesCountAggregateOutput
+        results = await InternalReceivables.prisma().count(
+            select={
+                '_all': True,
+                'issue_date': True,
+            },
+        )
+        ```
+        """
+
+        # TODO: this selection building should be moved to the QueryBuilder
+        #
+        # note the distinction between checking for `not select` here and `select is None`
+        # later is to handle the case that the given select dictionary is empty, this
+        # is a limitation of our types.
+        if not select:
+            root_selection = ['_count { _all }']
+        else:
+
+            root_selection = [
+                '_count {{ {0} }}'.format(' '.join(k for k, v in select.items() if v is True))
+            ]
+
+        resp = await self._client._execute(
+            method='count',
+            model=self._model,
+            arguments={
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'cursor': cursor,
+            },
+            root_selection=root_selection,
+        )
+
+        if select is None:
+            return cast(int, resp['data']['result']['_count']['_all'])
+        else:
+            return cast(types.InternalReceivablesCountAggregateOutput, resp['data']['result']['_count'])
+
+    async def delete_many(
+        self,
+        where: Optional[types.InternalReceivablesWhereInput] = None
+    ) -> int:
+        """Delete multiple InternalReceivables records.
+
+        Parameters
+        ----------
+        where
+            Optional InternalReceivables filter to find the records to be deleted
+
+        Returns
+        -------
+        int
+            The total number of InternalReceivables records that were deleted
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # delete all InternalReceivables records
+        total = await InternalReceivables.prisma().delete_many()
+        ```
+        """
+        resp = await self._client._execute(
+            method='delete_many',
+            model=self._model,
+            arguments={'where': where},
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    # TODO: make this easier to work with safely, currently output fields are typed as
+    #       not required, we should refactor the return type
+    # TODO: consider returning a Dict where the keys are a Tuple of the `by` selection
+    # TODO: statically type that the order argument is required when take or skip are present
+    async def group_by(
+        self,
+        by: List['types.InternalReceivablesScalarFieldKeysT'],
+        *,
+        where: Optional['types.InternalReceivablesWhereInput'] = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        avg: Optional['types.InternalReceivablesAvgAggregateInput'] = None,
+        sum: Optional['types.InternalReceivablesSumAggregateInput'] = None,
+        min: Optional['types.InternalReceivablesMinAggregateInput'] = None,
+        max: Optional['types.InternalReceivablesMaxAggregateInput'] = None,
+        having: Optional['types.InternalReceivablesScalarWhereWithAggregatesInput'] = None,
+        count: Optional[Union[bool, 'types.InternalReceivablesCountAggregateInput']] = None,
+        order: Optional[Union[Mapping['types.InternalReceivablesScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.InternalReceivablesScalarFieldKeysT', 'types.SortOrder']]]] = None,
+    ) -> List['types.InternalReceivablesGroupByOutput']:
+        """Group InternalReceivables records by one or more field values and perform aggregations
+        each group such as finding the average.
+
+        Parameters
+        ----------
+        by
+            List of scalar InternalReceivables fields to group records by
+        where
+            InternalReceivables filter to select records
+        take
+            Limit the maximum number of InternalReceivables records returned
+        skip
+            Ignore the first N records
+        avg
+            Adds the average of all values of the specified fields to the `_avg` field
+            in the returned data.
+        sum
+            Adds the sum of all values of the specified fields to the `_sum` field
+            in the returned data.
+        min
+            Adds the smallest available value for the specified fields to the `_min` field
+            in the returned data.
+        max
+            Adds the largest available value for the specified fields to the `_max` field
+            in the returned data.
+        count
+            Adds a count of non-fields to the `_count` field in the returned data.
+        having
+            Allows you to filter groups by an aggregate value - for example only return
+            groups having an average age less than 50.
+        order
+            Lets you order the returned list by any property that is also present in `by`.
+            Only **one** field is allowed at a time.
+
+        Returns
+        -------
+        List[prisma.types.InternalReceivablesGroupByOutput]
+            A list of dictionaries representing the InternalReceivables record,
+            this will also have additional fields present if aggregation arguments
+            are used (see the above parameters)
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # group InternalReceivables records by due_date values
+        # and count how many records are in each group
+        results = await InternalReceivables.prisma().group_by(
+            ['due_date'],
+            count=True,
+        )
+        ```
+        """
+        if order is None:
+            if take is not None:
+                raise TypeError('Missing argument: \'order\' which is required when \'take\' is present')
+
+            if skip is not None:
+                raise TypeError('Missing argument: \'order\' which is required when \'skip\' is present')
+
+        root_selection: List[str] = [*by]
+        if avg is not None:
+            root_selection.append(_select_fields('_avg', avg))
+
+        if min is not None:
+            root_selection.append(_select_fields('_min', min))
+
+        if sum is not None:
+            root_selection.append(_select_fields('_sum', sum))
+
+        if max is not None:
+            root_selection.append(_select_fields('_max', max))
+
+        if count is not None:
+            if count is True:
+                root_selection.append('_count { _all }')
+            elif isinstance(count, dict):
+                root_selection.append(_select_fields('_count', count))
+
+        resp = await self._client._execute(
+            method='group_by',
+            model=self._model,
+            arguments={
+                'by': by,
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'having': having,
+                'orderBy': order,
+            },
+            root_selection=root_selection,
+        )
+        return resp['data']['result']  # type: ignore[no-any-return]
+
+
 
 def _select_fields(root: str, select: Mapping[str, Any]) -> str:
     """Helper to build a GraphQL selection string

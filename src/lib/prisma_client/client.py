@@ -96,10 +96,14 @@ class Prisma(AsyncBasePrisma):
     # https://prisma-client-py.readthedocs.io/en/stable/reference/schema-extensions/#instance_name
     ingestionlogs: 'actions.IngestionLogsActions[models.IngestionLogs]'
     banktransactions: 'actions.BankTransactionsActions[models.BankTransactions]'
+    internalpayments: 'actions.InternalPaymentsActions[models.InternalPayments]'
+    internalreceivables: 'actions.InternalReceivablesActions[models.InternalReceivables]'
 
     __slots__ = (
         'ingestionlogs',
         'banktransactions',
+        'internalpayments',
+        'internalreceivables',
     )
 
     def __init__(
@@ -132,6 +136,8 @@ class Prisma(AsyncBasePrisma):
 
         self.ingestionlogs = actions.IngestionLogsActions[models.IngestionLogs](self, models.IngestionLogs)
         self.banktransactions = actions.BankTransactionsActions[models.BankTransactions](self, models.BankTransactions)
+        self.internalpayments = actions.InternalPaymentsActions[models.InternalPayments](self, models.InternalPayments)
+        self.internalreceivables = actions.InternalReceivablesActions[models.InternalReceivables](self, models.InternalReceivables)
 
         if auto_register:
             register(self)
@@ -284,6 +290,8 @@ TransactionManager = AsyncTransactionManager[Prisma]
 class Batch:
     ingestionlogs: 'IngestionLogsBatchActions'
     banktransactions: 'BankTransactionsBatchActions'
+    internalpayments: 'InternalPaymentsBatchActions'
+    internalreceivables: 'InternalReceivablesBatchActions'
 
     def __init__(self, client: Prisma) -> None:
         self.__client = client
@@ -291,6 +299,8 @@ class Batch:
         self._active_provider = client._active_provider
         self.ingestionlogs = IngestionLogsBatchActions(self)
         self.banktransactions = BankTransactionsBatchActions(self)
+        self.internalpayments = InternalPaymentsBatchActions(self)
+        self.internalreceivables = InternalReceivablesBatchActions(self)
 
     def _add(self, **kwargs: Any) -> None:
         builder = QueryBuilder(
@@ -559,6 +569,228 @@ class BankTransactionsBatchActions:
         self._batcher._add(
             method='delete_many',
             model=models.BankTransactions,
+            arguments={'where': where},
+            root_selection=['count'],
+        )
+
+
+
+# NOTE: some arguments are meaningless in this context but are included
+# for completeness sake
+class InternalPaymentsBatchActions:
+    def __init__(self, batcher: Batch) -> None:
+        self._batcher = batcher
+
+    def create(
+        self,
+        data: types.InternalPaymentsCreateInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> None:
+        self._batcher._add(
+            method='create',
+            model=models.InternalPayments,
+            arguments={
+                'data': data,
+                'include': include,
+            },
+        )
+
+    def create_many(
+        self,
+        data: List[types.InternalPaymentsCreateWithoutRelationsInput],
+        *,
+        skip_duplicates: Optional[bool] = None,
+    ) -> None:
+        if skip_duplicates and self._batcher._active_provider in CREATE_MANY_SKIP_DUPLICATES_UNSUPPORTED:
+            raise errors.UnsupportedDatabaseError(self._batcher._active_provider, 'create_many_skip_duplicates')
+
+        self._batcher._add(
+            method='create_many',
+            model=models.InternalPayments,
+            arguments={
+                'data': data,
+                'skipDuplicates': skip_duplicates,
+            },
+            root_selection=['count'],
+        )
+
+    def delete(
+        self,
+        where: types.InternalPaymentsWhereUniqueInput,
+        include: Optional[types.InternalPaymentsInclude] = None,
+    ) -> None:
+        self._batcher._add(
+            method='delete',
+            model=models.InternalPayments,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+
+    def update(
+        self,
+        data: types.InternalPaymentsUpdateInput,
+        where: types.InternalPaymentsWhereUniqueInput,
+        include: Optional[types.InternalPaymentsInclude] = None
+    ) -> None:
+        self._batcher._add(
+            method='update',
+            model=models.InternalPayments,
+            arguments={
+                'data': data,
+                'where': where,
+                'include': include,
+            },
+        )
+
+    def upsert(
+        self,
+        where: types.InternalPaymentsWhereUniqueInput,
+        data: types.InternalPaymentsUpsertInput,
+        include: Optional[types.InternalPaymentsInclude] = None,
+    ) -> None:
+        self._batcher._add(
+            method='upsert',
+            model=models.InternalPayments,
+            arguments={
+                'where': where,
+                'include': include,
+                'create': data.get('create'),
+                'update': data.get('update'),
+            },
+        )
+
+    def update_many(
+        self,
+        data: types.InternalPaymentsUpdateManyMutationInput,
+        where: types.InternalPaymentsWhereInput,
+    ) -> None:
+        self._batcher._add(
+            method='update_many',
+            model=models.InternalPayments,
+            arguments={'data': data, 'where': where,},
+            root_selection=['count'],
+        )
+
+    def delete_many(
+        self,
+        where: Optional[types.InternalPaymentsWhereInput] = None,
+    ) -> None:
+        self._batcher._add(
+            method='delete_many',
+            model=models.InternalPayments,
+            arguments={'where': where},
+            root_selection=['count'],
+        )
+
+
+
+# NOTE: some arguments are meaningless in this context but are included
+# for completeness sake
+class InternalReceivablesBatchActions:
+    def __init__(self, batcher: Batch) -> None:
+        self._batcher = batcher
+
+    def create(
+        self,
+        data: types.InternalReceivablesCreateInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> None:
+        self._batcher._add(
+            method='create',
+            model=models.InternalReceivables,
+            arguments={
+                'data': data,
+                'include': include,
+            },
+        )
+
+    def create_many(
+        self,
+        data: List[types.InternalReceivablesCreateWithoutRelationsInput],
+        *,
+        skip_duplicates: Optional[bool] = None,
+    ) -> None:
+        if skip_duplicates and self._batcher._active_provider in CREATE_MANY_SKIP_DUPLICATES_UNSUPPORTED:
+            raise errors.UnsupportedDatabaseError(self._batcher._active_provider, 'create_many_skip_duplicates')
+
+        self._batcher._add(
+            method='create_many',
+            model=models.InternalReceivables,
+            arguments={
+                'data': data,
+                'skipDuplicates': skip_duplicates,
+            },
+            root_selection=['count'],
+        )
+
+    def delete(
+        self,
+        where: types.InternalReceivablesWhereUniqueInput,
+        include: Optional[types.InternalReceivablesInclude] = None,
+    ) -> None:
+        self._batcher._add(
+            method='delete',
+            model=models.InternalReceivables,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+
+    def update(
+        self,
+        data: types.InternalReceivablesUpdateInput,
+        where: types.InternalReceivablesWhereUniqueInput,
+        include: Optional[types.InternalReceivablesInclude] = None
+    ) -> None:
+        self._batcher._add(
+            method='update',
+            model=models.InternalReceivables,
+            arguments={
+                'data': data,
+                'where': where,
+                'include': include,
+            },
+        )
+
+    def upsert(
+        self,
+        where: types.InternalReceivablesWhereUniqueInput,
+        data: types.InternalReceivablesUpsertInput,
+        include: Optional[types.InternalReceivablesInclude] = None,
+    ) -> None:
+        self._batcher._add(
+            method='upsert',
+            model=models.InternalReceivables,
+            arguments={
+                'where': where,
+                'include': include,
+                'create': data.get('create'),
+                'update': data.get('update'),
+            },
+        )
+
+    def update_many(
+        self,
+        data: types.InternalReceivablesUpdateManyMutationInput,
+        where: types.InternalReceivablesWhereInput,
+    ) -> None:
+        self._batcher._add(
+            method='update_many',
+            model=models.InternalReceivables,
+            arguments={'data': data, 'where': where,},
+            root_selection=['count'],
+        )
+
+    def delete_many(
+        self,
+        where: Optional[types.InternalReceivablesWhereInput] = None,
+    ) -> None:
+        self._batcher._add(
+            method='delete_many',
+            model=models.InternalReceivables,
             arguments={'where': where},
             root_selection=['count'],
         )

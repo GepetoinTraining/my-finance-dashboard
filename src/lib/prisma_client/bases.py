@@ -94,3 +94,23 @@ class BaseBankTransactions(_PrismaModel):
         return actions.BankTransactionsActions[_PrismaModelT](client or get_client(), cls)
 
 
+class BaseInternalPayments(_PrismaModel):
+    __prisma_model__: ClassVar[Literal['InternalPayments']] = 'InternalPayments'  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @classmethod
+    def prisma(cls: Type[_PrismaModelT], client: Optional['Prisma'] = None) -> 'actions.InternalPaymentsActions[_PrismaModelT]':
+        from .client import get_client
+
+        return actions.InternalPaymentsActions[_PrismaModelT](client or get_client(), cls)
+
+
+class BaseInternalReceivables(_PrismaModel):
+    __prisma_model__: ClassVar[Literal['InternalReceivables']] = 'InternalReceivables'  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @classmethod
+    def prisma(cls: Type[_PrismaModelT], client: Optional['Prisma'] = None) -> 'actions.InternalReceivablesActions[_PrismaModelT]':
+        from .client import get_client
+
+        return actions.InternalReceivablesActions[_PrismaModelT](client or get_client(), cls)
+
+

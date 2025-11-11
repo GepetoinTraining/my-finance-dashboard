@@ -250,6 +250,217 @@ class BankTransactions(bases.BaseBankTransactions):
         _created_partial_types.add(name)
 
 
+class InternalPayments(bases.BaseInternalPayments):
+    """Represents a InternalPayments record"""
+
+    id: _int
+    category: Optional[_str] = None
+    entity_name: Optional[_str] = None
+    entity_type: Optional[_str] = None
+    installment: Optional[_str] = None
+    issue_date: Optional[datetime.datetime] = None
+    due_date: Optional[datetime.datetime] = None
+    full_amount: Optional[decimal.Decimal] = None
+    discount_amount: Optional[decimal.Decimal] = None
+    updated_amount: Optional[decimal.Decimal] = None
+    paid_amount: Optional[decimal.Decimal] = None
+    notes: Optional[_str] = None
+    status: Optional[_str] = None
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+
+    @staticmethod
+    def create_partial(
+        name: str,
+        include: Optional[Iterable['types.InternalPaymentsKeys']] = None,
+        exclude: Optional[Iterable['types.InternalPaymentsKeys']] = None,
+        required: Optional[Iterable['types.InternalPaymentsKeys']] = None,
+        optional: Optional[Iterable['types.InternalPaymentsKeys']] = None,
+        relations: Optional[Mapping['types.InternalPaymentsRelationalFieldKeys', str]] = None,
+        exclude_relational_fields: bool = False,
+    ) -> None:
+        if not os.environ.get('PRISMA_GENERATOR_INVOCATION'):
+            raise RuntimeError(
+                'Attempted to create a partial type outside of client generation.'
+            )
+
+        if name in _created_partial_types:
+            raise ValueError(f'Partial type "{name}" has already been created.')
+
+        if include is not None:
+            if exclude is not None:
+                raise TypeError('Exclude and include are mutually exclusive.')
+            if exclude_relational_fields is True:
+                raise TypeError('Include and exclude_relational_fields=True are mutually exclusive.')
+
+        if required and optional:
+            shared = set(required) & set(optional)
+            if shared:
+                raise ValueError(f'Cannot make the same field(s) required and optional {shared}')
+
+        if exclude_relational_fields and relations:
+            raise ValueError(
+                'exclude_relational_fields and relations are mutually exclusive'
+            )
+
+        fields: Dict['types.InternalPaymentsKeys', PartialModelField] = OrderedDict()
+
+        try:
+            if include:
+                for field in include:
+                    fields[field] = _InternalPayments_fields[field].copy()
+            elif exclude:
+                for field in exclude:
+                    if field not in _InternalPayments_fields:
+                        raise KeyError(field)
+
+                fields = {
+                    key: data.copy()
+                    for key, data in _InternalPayments_fields.items()
+                    if key not in exclude
+                }
+            else:
+                fields = {
+                    key: data.copy()
+                    for key, data in _InternalPayments_fields.items()
+                }
+
+            if required:
+                for field in required:
+                    fields[field]['optional'] = False
+
+            if optional:
+                for field in optional:
+                    fields[field]['optional'] = True
+
+
+            if relations:
+                raise ValueError('Model: "InternalPayments" has no relational fields.')
+        except KeyError as exc:
+            raise ValueError(
+                f'{exc.args[0]} is not a valid InternalPayments / {name} field.'
+            ) from None
+
+        models = partial_models_ctx.get()
+        models.append(
+            {
+                'name': name,
+                'fields': cast(Mapping[str, PartialModelField], fields),
+                'from_model': 'InternalPayments',
+            }
+        )
+        _created_partial_types.add(name)
+
+
+class InternalReceivables(bases.BaseInternalReceivables):
+    """Represents a InternalReceivables record"""
+
+    id: _int
+    category: Optional[_str] = None
+    entity_name: Optional[_str] = None
+    entity_type: Optional[_str] = None
+    phone: Optional[_str] = None
+    financial_responsible: Optional[_str] = None
+    installment: Optional[_str] = None
+    issue_date: Optional[datetime.datetime] = None
+    due_date: Optional[datetime.datetime] = None
+    full_amount: Optional[decimal.Decimal] = None
+    discount_amount: Optional[decimal.Decimal] = None
+    updated_amount: Optional[decimal.Decimal] = None
+    paid_amount: Optional[decimal.Decimal] = None
+    notes: Optional[_str] = None
+    status: Optional[_str] = None
+    contract_status: Optional[_str] = None
+    source_file_name: _str
+    created_at: datetime.datetime
+
+
+
+    @staticmethod
+    def create_partial(
+        name: str,
+        include: Optional[Iterable['types.InternalReceivablesKeys']] = None,
+        exclude: Optional[Iterable['types.InternalReceivablesKeys']] = None,
+        required: Optional[Iterable['types.InternalReceivablesKeys']] = None,
+        optional: Optional[Iterable['types.InternalReceivablesKeys']] = None,
+        relations: Optional[Mapping['types.InternalReceivablesRelationalFieldKeys', str]] = None,
+        exclude_relational_fields: bool = False,
+    ) -> None:
+        if not os.environ.get('PRISMA_GENERATOR_INVOCATION'):
+            raise RuntimeError(
+                'Attempted to create a partial type outside of client generation.'
+            )
+
+        if name in _created_partial_types:
+            raise ValueError(f'Partial type "{name}" has already been created.')
+
+        if include is not None:
+            if exclude is not None:
+                raise TypeError('Exclude and include are mutually exclusive.')
+            if exclude_relational_fields is True:
+                raise TypeError('Include and exclude_relational_fields=True are mutually exclusive.')
+
+        if required and optional:
+            shared = set(required) & set(optional)
+            if shared:
+                raise ValueError(f'Cannot make the same field(s) required and optional {shared}')
+
+        if exclude_relational_fields and relations:
+            raise ValueError(
+                'exclude_relational_fields and relations are mutually exclusive'
+            )
+
+        fields: Dict['types.InternalReceivablesKeys', PartialModelField] = OrderedDict()
+
+        try:
+            if include:
+                for field in include:
+                    fields[field] = _InternalReceivables_fields[field].copy()
+            elif exclude:
+                for field in exclude:
+                    if field not in _InternalReceivables_fields:
+                        raise KeyError(field)
+
+                fields = {
+                    key: data.copy()
+                    for key, data in _InternalReceivables_fields.items()
+                    if key not in exclude
+                }
+            else:
+                fields = {
+                    key: data.copy()
+                    for key, data in _InternalReceivables_fields.items()
+                }
+
+            if required:
+                for field in required:
+                    fields[field]['optional'] = False
+
+            if optional:
+                for field in optional:
+                    fields[field]['optional'] = True
+
+
+            if relations:
+                raise ValueError('Model: "InternalReceivables" has no relational fields.')
+        except KeyError as exc:
+            raise ValueError(
+                f'{exc.args[0]} is not a valid InternalReceivables / {name} field.'
+            ) from None
+
+        models = partial_models_ctx.get()
+        models.append(
+            {
+                'name': name,
+                'fields': cast(Mapping[str, PartialModelField], fields),
+                'from_model': 'InternalReceivables',
+            }
+        )
+        _created_partial_types.add(name)
+
+
 
 _IngestionLogs_relational_fields: Set[str] = set()  # pyright: ignore[reportUnusedVariable]
 _IngestionLogs_fields: Dict['types.IngestionLogsKeys', PartialModelField] = OrderedDict(
@@ -391,6 +602,282 @@ _BankTransactions_fields: Dict['types.BankTransactionsKeys', PartialModelField] 
     ],
 )
 
+_InternalPayments_relational_fields: Set[str] = set()  # pyright: ignore[reportUnusedVariable]
+_InternalPayments_fields: Dict['types.InternalPaymentsKeys', PartialModelField] = OrderedDict(
+    [
+        ('id', {
+            'name': 'id',
+            'is_list': False,
+            'optional': False,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('category', {
+            'name': 'category',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('entity_name', {
+            'name': 'entity_name',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('entity_type', {
+            'name': 'entity_type',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('installment', {
+            'name': 'installment',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('issue_date', {
+            'name': 'issue_date',
+            'is_list': False,
+            'optional': True,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('due_date', {
+            'name': 'due_date',
+            'is_list': False,
+            'optional': True,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('full_amount', {
+            'name': 'full_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('discount_amount', {
+            'name': 'discount_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('updated_amount', {
+            'name': 'updated_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('paid_amount', {
+            'name': 'paid_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('notes', {
+            'name': 'notes',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('status', {
+            'name': 'status',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('source_file_name', {
+            'name': 'source_file_name',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('created_at', {
+            'name': 'created_at',
+            'is_list': False,
+            'optional': False,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+    ],
+)
+
+_InternalReceivables_relational_fields: Set[str] = set()  # pyright: ignore[reportUnusedVariable]
+_InternalReceivables_fields: Dict['types.InternalReceivablesKeys', PartialModelField] = OrderedDict(
+    [
+        ('id', {
+            'name': 'id',
+            'is_list': False,
+            'optional': False,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('category', {
+            'name': 'category',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('entity_name', {
+            'name': 'entity_name',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('entity_type', {
+            'name': 'entity_type',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('phone', {
+            'name': 'phone',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('financial_responsible', {
+            'name': 'financial_responsible',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('installment', {
+            'name': 'installment',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('issue_date', {
+            'name': 'issue_date',
+            'is_list': False,
+            'optional': True,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('due_date', {
+            'name': 'due_date',
+            'is_list': False,
+            'optional': True,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('full_amount', {
+            'name': 'full_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('discount_amount', {
+            'name': 'discount_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('updated_amount', {
+            'name': 'updated_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('paid_amount', {
+            'name': 'paid_amount',
+            'is_list': False,
+            'optional': True,
+            'type': 'decimal.Decimal',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('notes', {
+            'name': 'notes',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('status', {
+            'name': 'status',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('contract_status', {
+            'name': 'contract_status',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('source_file_name', {
+            'name': 'source_file_name',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('created_at', {
+            'name': 'created_at',
+            'is_list': False,
+            'optional': False,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+    ],
+)
+
 
 
 # we have to import ourselves as relation types are namespaced to models
@@ -400,3 +887,5 @@ from . import models, actions
 # required to support relationships between models
 model_rebuild(IngestionLogs)
 model_rebuild(BankTransactions)
+model_rebuild(InternalPayments)
+model_rebuild(InternalReceivables)

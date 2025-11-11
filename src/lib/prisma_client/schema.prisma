@@ -3,8 +3,6 @@
 
 generator client {
   provider                    = "prisma-client-py"
-  // This ensures the client is generated where the Python code can find it.
-  // Vercel's build process will place it correctly.
   output                      = "../src/lib/prisma_client"
   recursive_type_depth        = -1
   enable_experimental_decimal = true
@@ -14,6 +12,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// === EXISTING MODELS ===
 
 // Replicates your 'ingestion_logs' table
 model IngestionLogs {
@@ -41,4 +41,51 @@ model BankTransactions {
   created_at       DateTime  @default(now()) @db.Timestamp(6)
 
   @@map("bank_transactions")
+}
+
+// === NEW MODELS FOR INTERNAL REPORTS ===
+
+// Model for novembro-pagamentos.pdf
+model InternalPayments {
+  id               Int       @id @default(autoincrement())
+  category         String?   @map("categoria")
+  entity_name      String?   @map("entidade_nome")
+  entity_type      String?   @map("entidade_tipo")
+  installment      String?   @map("parcela")
+  issue_date       DateTime? @map("emissao") @db.Date
+  due_date         DateTime? @map("vencimento") @db.Date
+  full_amount      Decimal?  @map("valor_integral") @db.Decimal(12, 2)
+  discount_amount  Decimal?  @map("valor_com_desconto") @db.Decimal(12, 2)
+  updated_amount   Decimal?  @map("valor_atualizado") @db.Decimal(12, 2)
+  paid_amount      Decimal?  @map("valor_pago") @db.Decimal(12, 2)
+  notes            String?   @map("observacao")
+  status           String?   @map("status")
+  source_file_name String    @db.VarChar(255)
+  created_at       DateTime  @default(now()) @db.Timestamp(6)
+
+  @@map("internal_payments")
+}
+
+// Model for novembro-recebimentos.pdf
+model InternalReceivables {
+  id                    Int       @id @default(autoincrement())
+  category              String?   @map("categoria")
+  entity_name           String?   @map("entidade_nome")
+  entity_type           String?   @map("entidade_tipo")
+  phone                 String?   @map("telefone")
+  financial_responsible String?   @map("responsavel_financeiro")
+  installment           String?   @map("parcela")
+  issue_date            DateTime? @map("emissao") @db.Date
+  due_date              DateTime? @map("vencimento") @db.Date
+  full_amount           Decimal?  @map("valor_integral") @db.Decimal(12, 2)
+  discount_amount       Decimal?  @map("valor_com_desconto") @db.Decimal(12, 2)
+  updated_amount        Decimal?  @map("valor_atualizado") @db.Decimal(12, 2)
+  paid_amount           Decimal?  @map("valor_pago") @db.Decimal(12, 2)
+  notes                 String?   @map("observacao")
+  status                String?   @map("status")
+  contract_status       String?   @map("status_do_contrato")
+  source_file_name      String    @db.VarChar(255)
+  created_at            DateTime  @default(now()) @db.Timestamp(6)
+
+  @@map("internal_receivables")
 }
