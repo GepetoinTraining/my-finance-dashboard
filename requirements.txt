@@ -1,0 +1,4 @@
+pdfplumber
+psycopg2-binary
+fastapi
+python-multipart
