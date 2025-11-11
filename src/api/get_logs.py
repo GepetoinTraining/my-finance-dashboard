@@ -1,14 +1,28 @@
 # src/api/get_logs.py
 import os
 import json
-import psycopg2
-import psycopg2.extras
-from typing import Optional
+from typing import Optional, List, Dict, Any
+import sys
 
 # Framework FastAPI
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+# --- VERCEL PATH FIX (STILL REQUIRED) ---
+sys.path.append(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
+# --- FIM DA MODIFICAÇÃO ---
+
+# --- INÍCIO DA MODIFICAÇÃO PRISMA ---
+from lib.prisma_client import Prisma # REMOVED 'register'
+# --- FIM DA MODIFICAÇÃO PRISMA ---
+
 
 # ==============================================================================
 #  Inicialização do App FastAPI
@@ -28,45 +42,11 @@ app.add_middleware(
 )
 
 # ==============================================================================
-#  Classe de Gerenciamento do DB (Simplificada)
+#  Endpoint da API FastAPI (Refatorado para PRISMA)
 # ==============================================================================
-class DatabaseManager:
-    def __init__(self):
-        self.db_url = os.environ.get("DATABASE_URL")
-        if not self.db_url:
-            raise Exception("Variável de ambiente DATABASE_URL não definida.")
-            
-    def get_logs(self, job_id: str) -> list:
-        """Busca todos os logs para um job_id específico, ordenados por tempo."""
-        logs = []
-        try:
-            with psycopg2.connect(self.db_url) as conn:
-                with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-                    cur.execute(
-                        """
-                        SELECT log_type, message, timestamp
-                        FROM ingestion_logs
-                        WHERE job_id = %s
-                        ORDER BY timestamp ASC
-                        """,
-                        (job_id,)
-                    )
-                    results = cur.fetchall()
-                    for row in results:
-                        logs.append({
-                            "type": row["log_type"],
-                            "text": row["message"]
-                        })
-            return logs
-        except Exception as e:
-            print(f"Erro ao buscar logs: {e}")
-            raise 
 
-# ==============================================================================
-#  Endpoint da API FastAPI
-# ==============================================================================
-# O roteador da Vercel já nos colocou em /api/get_logs.
-# Então, o endpoint que o FastAPI precisa criar é a RAIZ (/).
+# REMOVED: register(app) - This line was causing the error
+
 @app.get("/")
 async def handle_get_logs(job_id: Optional[str] = Query(None)):
     """
@@ -75,13 +55,24 @@ async def handle_get_logs(job_id: Optional[str] = Query(None)):
     if not job_id:
         raise HTTPException(status_code=400, detail="job_id é obrigatório.")
         
-    db = DatabaseManager()
+    db = Prisma()
     
     try:
-        logs = db.get_logs(job_id)
+        await db.connect()
+        log_entries = await db.ingestionlogs.find_many(
+            where={'job_id': job_id},
+            order={'timestamp': 'asc'}
+        )
+        
+        # Formata a saída para corresponder ao que o frontend espera
+        logs_formatted = [
+            {"type": log.log_type, "text": log.message}
+            for log in log_entries
+        ]
+        
         return JSONResponse(
             status_code=200,
-            content={'status': 'success', 'logs': logs}
+            content={'status': 'success', 'logs': logs_formatted}
         )
         
     except Exception as e:
@@ -91,3 +82,6 @@ async def handle_get_logs(job_id: Optional[str] = Query(None)):
             status_code=500,
             detail={'status': 'error', 'message': error_message}
         )
+    finally:
+        if db.is_connected():
+            await db.disconnect()
