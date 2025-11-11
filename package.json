@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
   "dev": "next dev",
-  "build": "pip install -r requirements.txt && prisma generate && next build",
+  "build": "pip install -r requirements.txt && python3 -m prisma generate && next build",
   "start": "next start",
   "lint": "eslint"
 },
