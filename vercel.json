@@ -2,19 +2,23 @@
   "builds": [
     {
       "src": "src/api/get_logs.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "includeFiles": ["src/lib/**"] }
     },
     {
       "src": "src/api/ingest.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "includeFiles": ["src/lib/**"] }
     },
     {
       "src": "src/api/ingest_internal.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "includeFiles": ["src/lib/**"] }
     },
     {
       "src": "src/api/reports/monthly_dre.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "includeFiles": ["src/lib/**"] }
     },
     {
       "src": "package.json",
