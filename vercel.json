@@ -24,7 +24,7 @@
   "routes": [
     {
       "src": "/api/reports/monthly_dre",
-      "dest": "srcM/api/reports/monthly_dre.py"
+      "dest": "src/api/reports/monthly_dre.py"
     },
     {
       "src": "/api/ingest_internal",
