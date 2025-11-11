@@ -1,3 +1,4 @@
+# src/api/ingest.py
 import os
 import json
 import uuid
@@ -6,11 +7,24 @@ import psycopg2
 import psycopg2.extras
 from datetime import datetime
 from typing import cast, IO, Any, Optional, List, Dict
+import sys
 
 # Framework FastAPI
 from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+
+# --- INÍCIO DA MODIFICAÇÃO PARA O VERCEL ---
+# Adiciona o diretório 'src' (pai do pai deste arquivo) ao sys.path
+# Isso permite que 'from lib.parsers...' funcione no ambiente Vercel.
+sys.path.append(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
+# --- FIM DA MODIFICAÇÃO PARA O VERCEL ---
 
 # Nossa biblioteca de parser
 from lib.parsers.bank_parser import parse_2024, parse_2025

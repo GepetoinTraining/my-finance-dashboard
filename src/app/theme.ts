@@ -1,3 +1,4 @@
+// src/app/theme.ts
 // This file defines our base Mantine theme.
 "use client";
 

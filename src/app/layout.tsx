@@ -1,3 +1,4 @@
+// src/app/layout.tsx
 // This file sets up the MantineProvider for our Next.js App Router
 import '@mantine/core/styles.css';
 import React from 'react';

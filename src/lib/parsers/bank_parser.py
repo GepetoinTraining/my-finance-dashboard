@@ -1,3 +1,4 @@
+# src/lib/parsers/bank_parser.py
 import pdfplumber
 import re
 from typing import List, Dict, Any, Optional
