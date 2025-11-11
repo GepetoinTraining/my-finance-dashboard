@@ -1,4 +1,4 @@
 pdfplumber
-psycopg2-binary
+prisma
 fastapi
 python-multipart
