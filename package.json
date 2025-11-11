@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
+  "dev": "next dev",
+  "build": "pip install -r requirements.txt && prisma generate && next build",
+  "start": "next start",
+  "lint": "eslint"
+},
   "dependencies": {
     "@mantine/core": "^8.3.7",
     "@mantine/form": "^8.3.7",
