@@ -12,9 +12,7 @@ sys.path.append(
     os.path.dirname(
         os.path.dirname(
             os.path.dirname(
-                os.path.dirname(  # <-- This path should be correct
                     os.path.abspath(__file__)
-                )
             )
         )
     )
